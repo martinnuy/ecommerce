@@ -1,0 +1,28 @@
+.scrolling_text {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  white-space: nowrap;
+  background-color: black;
+}
+
+.text span {
+  margin: 0 40px;
+}
+
+@keyframes animate_text {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.text {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  animation: animate_text 40s linear infinite; /* The animation property */
+}

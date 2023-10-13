@@ -1,0 +1,20 @@
+.line-div {
+    height: 25px;
+    width: 100%;
+    background-color: #e91e63; 
+    top: 0;
+    left: 0;
+    z-index: 1; 
+  }
+
+  .nav-wrap{
+    flex-wrap: wrap;
+  }
+
+  .nav-icons{
+    font-size: 25px;
+  }
+
+  .logo{
+    max-height: 40px;
+  }
