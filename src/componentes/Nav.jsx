@@ -5,33 +5,33 @@ import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser, AiOutlineHeart  
 
 function Nav(){
 return(
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top nav-wrap p-0 shadow-lg">
+  <nav className="navbar stroke navbar-expand-lg navbar-dark bg-dark fixed-top nav-wrap p-0 shadow-lg">
   
-    <div className="line-div"></div>
+    <div className="line-div text-light">FREE SHIPPING FOR US ORDERS OVER $99!</div>
 
-    <div class="container-fluid">
-      <a class="navbar-brand position-absolute" href="#">
+    <div className="container-fluid">
+      <a className="navbar-brand position-absolute" href="./">
         <img 
           className="logo"
           src={require('../imagenes/logo.png')} 
           alt="Logo" />
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item my-3">
-            <a class="nav-link active" aria-current="page" href="#">Ropa</a>
+      <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
+        <ul className="navbar-nav mb-2 mb-lg-0">
+          <li className="nav-item my-3 mx-3 nav-link" >
+            <a className="nav-link active" aria-current="page" href="./ropa">ROPA</a>
           </li>
-          <li class="nav-item my-3">
-            <a class="nav-link active" aria-current="page" href="#">Calzado</a>
+          <li className="nav-item my-3 mx-3 nav-link">
+            <a className="nav-link active" aria-current="page" href="./calzado">CALZADO</a>
           </li>
-          <li class="nav-item my-3">
-            <a class="nav-link active" aria-current="page" href="#">Accesorios</a>
+          <li className="nav-item my-3 mx-3 nav-link">
+            <a className="nav-link active" aria-current="page" href="./accesorios">ACCESORIOS</a>
           </li>
-          <li class="nav-item my-3">
-            <a class="nav-link active" aria-current="page" href="#">Surf</a>
+          <li className="nav-item my-3 mx-3 nav-link">
+            <a className="nav-link active" aria-current="page" href="./surf">SURF</a>
           </li>
         </ul>
       </div>

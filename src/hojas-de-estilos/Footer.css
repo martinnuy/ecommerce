@@ -1,0 +1,29 @@
+.footer{
+  background: black;
+  color:white;
+  
+  .about-company{
+    i{font-size: 25px;}
+  } 
+
+  .location{
+    i{font-size: 18px;}
+  }
+
+  .copyright p{border-top:1px solid rgba(255,255,255,.1);} 
+}
+
+.footer-li{
+    list-style: none;
+}
+
+.footer-link{
+    transition: color .2s;
+    color: white;
+    text-decoration: none;
+}
+
+.footer-link:hover{
+    transition: color .2s;
+    color: #e91e63;
+}

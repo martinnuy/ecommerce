@@ -3,11 +3,11 @@ import '../hojas-de-estilos/InfiniteText.css'
 
 function InfiniteText() {
 
-    const textRepeat = "I'm moving wiiiiii!";
+    const textRepeat = "👻 20% OFF CON EL CODIGO: OCTUBRE 👻";
 
   return (
-    <div class="scrolling_text">
-    <div class="text">
+    <div className="scrolling_text">
+    <div className="text">
         <span>{textRepeat}</span>
         <span>{textRepeat}</span>
         <span>{textRepeat}</span>
@@ -19,7 +19,7 @@ function InfiniteText() {
         <span>{textRepeat}</span>
         <span>{textRepeat}</span>
     </div>
-    <div class="text">
+    <div className="text">
         <span>{textRepeat}</span>
         <span>{textRepeat}</span>
         <span>{textRepeat}</span>
