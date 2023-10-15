@@ -20,6 +20,23 @@ export default function App() {
         spaceBetween={20}
         navigation={true} 
         modules={[Navigation]} 
+        breakpoints={{
+            0: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+            },640: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 40,
+            },
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 50,
+            },
+          }}
         className="mySwiper">
 
         <SwiperSlide> <ProductCard titulo='1'/> </SwiperSlide>
