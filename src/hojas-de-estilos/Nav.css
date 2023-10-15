@@ -48,3 +48,22 @@
 .stroke ul li a:hover:after {
   width: 100%;
 }
+
+
+
+@media screen and (max-width: 991px) {
+  #navbarSupportedContent {
+    order: 2; /* Cambia el orden de div2 */
+  }
+
+  #icons-section {
+    order: 1; /* Cambia el orden de div3 */
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  #icons-section{
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+}

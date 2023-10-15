@@ -7,40 +7,53 @@ function Nav(){
 return(
   <nav className="navbar stroke navbar-expand-lg navbar-dark bg-dark fixed-top nav-wrap p-0 shadow-lg">
   
-    <div className="line-div text-light">FREE SHIPPING FOR US ORDERS OVER $99!</div>
+    <div className="line-div text-light">¡ ENVÍO GRATIS PARA PEDIDOS SUPERIORES $1500 !</div>
 
-    <div className="container-fluid">
-      <a className="navbar-brand position-absolute" href="./">
+    <div className="container-fluid row mx-auto p-0" id="nav-row-div">
+      
+
+      <a className="col-sm-12 col-md-4 col-lg-3 m-0 navbar-brand text-center" href="./">
         <img 
           className="logo"
           src={require('../imagenes/logo.png')} 
           alt="Logo" />
       </a>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
+
+
+      
+      <div className="col-md-4 collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+
+
         <ul className="navbar-nav mb-2 mb-lg-0">
           <li className="nav-item my-3 mx-3 nav-link" >
-            <a className="nav-link active" aria-current="page" href="./ropa">ROPA</a>
+            <a className="nav-link active text-center" aria-current="page" href="./ropa">ROPA</a>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <a className="nav-link active" aria-current="page" href="./calzado">CALZADO</a>
+            <a className="nav-link active text-center" aria-current="page" href="./calzado">CALZADO</a>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <a className="nav-link active" aria-current="page" href="./accesorios">ACCESORIOS</a>
+            <a className="nav-link active text-center" aria-current="page" href="./accesorios">ACCESORIOS</a>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <a className="nav-link active" aria-current="page" href="./surf">SURF</a>
+            <a className="nav-link active text-center" aria-current="page" href="./surf">SURF</a>
           </li>
         </ul>
+
       </div>
-      <div className="position-absolute bottom-5 end-0">
+      
+      <div className="col-sm-12 col-md-4 col-lg-3 py-0 px-5 me-5 text-end" id="icons-section">
         <AiOutlineSearch className="nav-icons text-light mx-2" />
         <AiOutlineShoppingCart className="nav-icons text-light mx-2" />
         <AiOutlineHeart className="nav-icons text-light mx-2" />
         <AiOutlineUser className="nav-icons text-light mx-2" />
+
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
       </div>
+
+      
+
     </div>
   </nav>
 );
