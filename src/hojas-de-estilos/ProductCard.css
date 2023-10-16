@@ -1,0 +1,30 @@
+.color-link-style {
+    text-decoration: none; 
+    color: inherit; 
+    transition: 0.4s color;
+  }
+
+  .remove-link-style, .remove-link-style:hover{
+    text-decoration: none; 
+    color: inherit; 
+  }
+
+
+.img-slider{
+    transition: 0.4s transform;
+}
+
+.producto-slider:hover{
+    cursor: pointer;
+
+    .color-link-style{
+        color: #e91e63;
+        transition: 0.4s color;
+    }
+
+    .img-slider{
+        transform: scale(0.99);
+        transition: 0.4s transform;
+
+    }
+}
