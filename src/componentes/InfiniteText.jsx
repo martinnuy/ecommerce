@@ -1,12 +1,12 @@
 import React from 'react'
 import '../hojas-de-estilos/InfiniteText.css'
 
-function InfiniteText() {
+function InfiniteText(props) {
 
-    const textRepeat = "👻 20% OFF CON EL CODIGO: OCTUBRE 👻";
+    const textRepeat = props.text;
 
   return (
-    <div className="scrolling_text">
+    <div className={`scrolling_text ${props.margin ? 'mt-8' : ''}`} >
     <div className="text">
         <span>{textRepeat}</span>
         <span>{textRepeat}</span>

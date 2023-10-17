@@ -2,11 +2,11 @@ import React from "react";
 import '../hojas-de-estilos/Carousel.css'
 import InfiniteText from "./InfiniteText";
 
-function Principal(){
+function Principal(props){
     return(
         <div className="div-principal shadow-lg">
 
-            <InfiniteText/>
+            <InfiniteText text={props.text}/>
 
             <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-indicators">
@@ -43,7 +43,7 @@ function Principal(){
                 </button>
             </div>
 
-            <InfiniteText/>
+            <InfiniteText text={props.text}/>
 
         </div>
     );

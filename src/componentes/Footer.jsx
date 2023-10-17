@@ -2,11 +2,11 @@ import React from 'react';
 import '../hojas-de-estilos/Footer.css';
 import InfiniteText from './InfiniteText';
 
-function Footer() {
+function Footer(props) {
   return (
     <div className="mt-5 pt-0 pb-5 footer shadow-lg">
         
-        <InfiniteText/>
+        <InfiniteText text={props.text}/>
         
         <div className="container pt-4">
         <div className="row">

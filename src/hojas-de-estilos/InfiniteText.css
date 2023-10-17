@@ -26,3 +26,7 @@
   color: white;
   animation: animate_text 40s linear infinite; /* The animation property */
 }
+
+.mt-8{
+  margin-top: 7rem!important;
+}
