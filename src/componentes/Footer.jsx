@@ -1,6 +1,7 @@
 import React from 'react';
 import '../hojas-de-estilos/Footer.css';
 import InfiniteText from './InfiniteText';
+import { Link } from 'react-router-dom';
 
 function Footer(props) {
   return (
@@ -12,12 +13,12 @@ function Footer(props) {
         <div className="row">
             <div className="col-lg-5 col-xs-12 about-company">
 
-            <a href="./">
+            <Link to="/">
                 <img 
                 className="logo"
                 src={require('../imagenes/logo.png')} 
                 alt="Logo" />
-             </a>
+             </Link>
 
             <p className="pr-5 text-white-50 mt-2">
                 Tenemos la mayor selección de camisetas y sudaderas con estampados elegantes, divertidos y geniales! Vintage, retro, deportivo.

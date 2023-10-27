@@ -1,7 +1,7 @@
 import React from "react";
 import '../hojas-de-estilos/Nav.css';
 import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser, AiOutlineHeart  } from 'react-icons/ai';
-
+import {Link} from 'react-router-dom';
 
 function Nav(){
 return(
@@ -12,12 +12,12 @@ return(
     <div className="container-fluid row mx-auto p-0" id="nav-row-div">
       
 
-      <a className="col-sm-12 col-md-4 col-lg-3 m-0 navbar-brand text-center" href="./">
+      <Link className="col-sm-12 col-md-4 col-lg-3 m-0 navbar-brand text-center" to="/">
         <img 
           className="logo"
           src={require('../imagenes/logo.png')} 
           alt="Logo" />
-      </a>
+      </Link>
 
 
       
@@ -26,16 +26,16 @@ return(
 
         <ul className="navbar-nav mb-2 mb-lg-0">
           <li className="nav-item my-3 mx-3 nav-link" >
-            <a className="nav-link active text-center" aria-current="page" href="./ropa">ROPA</a>
+            <Link className="nav-link active text-center" aria-current="page" to="/ropa">ROPA</Link>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <a className="nav-link active text-center" aria-current="page" href="./calzado">CALZADO</a>
+            <Link className="nav-link active text-center" aria-current="page" to="/calzado">CALZADO</Link>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <a className="nav-link active text-center" aria-current="page" href="./accesorios">ACCESORIOS</a>
+            <Link className="nav-link active text-center" aria-current="page" to="/accesorios">ACCESORIOS</Link>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <a className="nav-link active text-center" aria-current="page" href="./surf">SURF</a>
+            <Link className="nav-link active text-center" aria-current="page" to="/surf">SURF</Link>
           </li>
         </ul>
 

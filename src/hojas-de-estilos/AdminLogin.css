@@ -1,0 +1,28 @@
+.admBackground{
+    background-image: -webkit-radial-gradient(top, circle cover, #717171 0%, #373737 80%);
+}
+
+.login-div-adm{
+    background-color: white;
+    border-radius: 4%;
+}
+
+.boton-login-adm{
+    background-color: #e91e63;
+    border-color: #e91e63;
+}
+
+.boton-login-adm:hover{
+    background-color: #c01f55;
+}
+
+.link-dark-adm{
+    transition: color .2s;
+    color: black;
+    text-decoration: none;
+}
+
+.link-dark-adm:hover{
+    transition: color .2s;
+    color: #e91e63;
+}
