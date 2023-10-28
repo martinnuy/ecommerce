@@ -1,10 +1,50 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../hojas-de-estilos/Nav.css';
 import '../hojas-de-estilos/AdminLogin.css'
 import {Link} from 'react-router-dom';
 import { FaLock } from 'react-icons/fa';
 
 function AdminLogin() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageColor, setMessageColor] = useState(''); 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:4000/api/v1/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        const token = data.token;
+        localStorage.setItem('token', token);
+        setMessage('Inicio de sesión exitoso.');
+        setMessageColor('green');
+
+  
+        window.location.reload();
+
+
+      } else {
+        throw new Error('Autenticación fallida');
+      }
+    } catch (error) {
+      setMessage('Correo o contraseña incorrectos.');
+      setMessageColor('red');
+    }
+  };
+
+  
+
   return (
     <div className='admBackground'>
         <nav className="navbar stroke navbar-expand-lg navbar-dark bg-dark fixed-top nav-wrap p-0 shadow-lg">
@@ -27,17 +67,37 @@ function AdminLogin() {
             <div className="text-center p-5 shadow-lg login-div-adm">
                 <FaLock size="3em" color="#e91e63" />
                 <h2 className='pt-3'>Iniciar sesión</h2>
-                <form id="login-form">
-                <div className="form-group py-3">
-                    <input type="email" id="email" name="email" className="form-control" placeholder='Email' required />
-                </div>
-                <div className="form-group py-3">
-                    <input type="password" id="password" name="password" className="form-control" placeholder='Contraseña' required />
-                </div>
-                <div><a className='link-dark-adm' href='/'>Recuperar Contraseña</a></div>
-                <button type="submit" className="btn btn-danger my-3 boton-login-adm">Iniciar sesión</button>
+
+                <form id="login-form" onSubmit={handleSubmit}>
+                    <div className="form-group py-3">
+                        <input 
+                            type="email" 
+                            id="emailAdm" 
+                            name="email" 
+                            className="form-control" 
+                            placeholder='Email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required 
+                        />
+                    </div>
+                    <div className="form-group py-3">
+                        <input 
+                            type="password" 
+                            id="passwordAdm" 
+                            name="password" 
+                            className="form-control" 
+                            placeholder='Contraseña'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)} 
+                            required 
+                        />
+                    </div>
+                    <div><a className='link-dark-adm' href='/'>Recuperar Contraseña</a></div>
+                    <button type="submit" className="btn btn-danger my-3 boton-login-adm">Iniciar sesión</button>
                 </form>
-                <div id="message" className="hidden"></div>
+
+                <div style={{ color: messageColor }}>{message}</div>
             </div>
         </div>
 
