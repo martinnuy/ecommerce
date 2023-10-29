@@ -1,0 +1,4 @@
+.panel-button:focus{
+    transition: color .2s;
+    color: #e91e63;
+  }

@@ -13,10 +13,10 @@ function SubscriptionDiv() {
             </p>
 
             <form className='form-inline'>
-                <div class="form-group d-inline-block mb-2">
-                    <input type="email" class="form-control rounded-pill formSub-text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su Email"/>
+                <div className="form-group d-inline-block mb-2">
+                    <input type="email" className="form-control rounded-pill formSub-text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su Email"/>
                 </div>
-                <button type="submit" class="btn btn-light mb-2 mx-3 d-inline-block rounded-pill formSub-text">Inscribirse</button>
+                <button type="submit" className="btn btn-light mb-2 mx-3 d-inline-block rounded-pill formSub-text">Inscribirse</button>
             </form>
 
         </div>

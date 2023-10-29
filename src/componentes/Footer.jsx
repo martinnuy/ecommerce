@@ -4,6 +4,9 @@ import InfiniteText from './InfiniteText';
 import { Link } from 'react-router-dom';
 
 function Footer(props) {
+    
+    const fecha = new Date();
+    
   return (
     <div className="mt-5 pt-0 pb-5 footer shadow-lg">
         
@@ -48,7 +51,7 @@ function Footer(props) {
         </div>
         <div className="row mt-5">
             <div className="col copyright">
-                <small className="text-white-50">© Copyright 2023.</small> 
+                <small className="text-white-50">© Copyright { fecha.getFullYear().toString() }.</small> 
                 <p className="pt-2 text-center">
                     <small className="text-white-50">SITE BY <a className='footer-link' href="https://martinn.uy/" rel="noreferrer" target='_blank'>MN</a></small>
                 </p>

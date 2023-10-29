@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import '../hojas-de-estilos/Nav.css';
 import '../hojas-de-estilos/AdminLogin.css'
-import {Link} from 'react-router-dom';
 import { FaLock } from 'react-icons/fa';
+import NavSimple from './NavSimple';
 
 function AdminLogin() {
 
@@ -47,21 +47,8 @@ function AdminLogin() {
 
   return (
     <div className='admBackground'>
-        <nav className="navbar stroke navbar-expand-lg navbar-dark bg-dark fixed-top nav-wrap p-0 shadow-lg">
         
-            <div className="line-div text-light">BIENVENIDO</div>
-
-            <div className="row mx-auto my-3 p-0" id="nav-row-div">
-            
-            <Link className="col-sm-12 col-md-4 col-lg-3 m-0 navbar-brand text-center" to="/">
-                <img 
-                className="logo"
-                src={require('../imagenes/logo.png')} 
-                alt="Logo" />
-            </Link>
-
-            </div>
-        </nav>
+        <NavSimple center='true' />
 
         <div className="container d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
             <div className="text-center p-5 shadow-lg login-div-adm">

@@ -23,7 +23,15 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/ropa' element={<Example />} />
+          
+          <Route path='/calzado' element={<Example />} />
+          <Route path='/accesorios' element={<Example />} />
+          <Route path='/surf' element={<Example />} />
+
+
+
+
+
 
           <Route 
               path='/admin' 
@@ -40,7 +48,16 @@ function App() {
               }
             />
 
-          <Route path='/admin/panel' element={<AdminPanel />} />
+          <Route 
+            path='/admin/panel' 
+            element={
+              localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
+                <AdminPanel/>
+              ) : ( 
+                <Navigate to="/" /> 
+              )
+            }
+          />
 
         </Routes>
 
