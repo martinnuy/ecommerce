@@ -1,21 +1,51 @@
-import React from 'react'
-import Nav from './Nav'
+import React, { useState, useEffect } from 'react'
 import ProductCard from './ProductCard'
 
-function MostrarProductos() {
+function MostrarProductos(props) {
+
+  const [traerProductos, setTraerProductos] = useState([]);
+
+  useEffect(() => {
+
+    // Realiza una solicitud Fetch para obtener los productos mas vendidos
+    fetch(`http://localhost:4000/api/v1/productos/${props.categoria}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTraerProductos(data); // Guarda los datos en el estado
+      })
+      .catch((error) => {
+        console.error('Error al obtener los datos', error);
+      });
+
+  }, [props.categoria]);
+
+  function generarProductos(grupo){
+    if(grupo.length !== 0){
+      return(
+        grupo.map((p, index) =>{
+          return(
+            <div className='col-md-3 text-center' key={index}>
+              <ProductCard
+                titulo={p.nombre}
+                tipo={p.categoria}
+                precio={p.precio}
+                imgUrl={p.img}
+              />  
+            </div> 
+          );
+        
+        })
+      );
+    }
+  }
+
+
   return (
     <div>    
-        <Nav/>
 
-        <div className='div-principal'>
-
-            <h1>Mostrar productos</h1>
-            <ProductCard
-                  titulo='prenda'
-                  tipo='remera'
-                  precio="1200"
-                  imgUrl='https://firebasestorage.googleapis.com/v0/b/eshop-imagenes.appspot.com/o/17acd1ee-d94c-4875-8bf6-e19185bff2b6.jpg?alt=media&token=3c483dbe-63b3-4947-98e4-454e28f2b242'
-            />  
+        <div className='row'>
+          
+            {generarProductos(traerProductos)}
             
         </div>
     </div>

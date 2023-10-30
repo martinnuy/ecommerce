@@ -99,10 +99,11 @@ function AgregarProducto() {
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
       <div className="form-container">
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit} id="formAgregarProducto">
           <h1 className="text-center">Agregar Producto</h1>
           <div className="mb-3">
             <input
+              id="nombreInput"
               type="text"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
@@ -113,6 +114,7 @@ function AgregarProducto() {
           </div>
           <div className="mb-3">
             <input
+              id="precioInput"
               type="number"
               value={precio}
               onChange={(e) => setPrecio(e.target.value)}
@@ -143,6 +145,7 @@ function AgregarProducto() {
           </div>
           <div className="mb-3">
             <input
+              id="tallasInput"
               type="text"
               value={talles}
               onChange={(e) => setTalles(e.target.value)}

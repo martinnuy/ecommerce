@@ -24,11 +24,11 @@ function Footer(props) {
              </Link>
 
             <p className="pr-5 text-white-50 mt-2">
-                Tenemos la mayor selección de camisetas y sudaderas con estampados elegantes, divertidos y geniales! Vintage, retro, deportivo.
+                Descubre la amplia gama de buzos y camisetas con estampados elegantes, divertidos y geniales que tenemos para ofrecerte.
             </p>
             <p className="pr-5 text-white-50">
-                Es importante para nosotros que usted quede satisfecho con su compra con nosotros. Por lo tanto, ofrecemos una política de devolución de 
-                30 días, métodos de pago seguros y una gran selección para elegir.
+            Desde diseños vintage hasta opciones retro y deportivas, en nuestro catálogo encontrarás prendas únicas. Tu satisfacción es nuestra prioridad, por eso te brindamos 
+            una política de devolución de 30 días, métodos de pago seguros y una amplia variedad de opciones para que elijas con confianza.
             </p>
             <p><a href="./"><i className="fa fa-facebook-square mr-1"></i></a><a href="./"><i className="fa fa-linkedin-square"></i></a></p>
             </div>
@@ -43,10 +43,10 @@ function Footer(props) {
             </div>
             <div className="col-lg-4 col-xs-12 location">
             <h4 className="mt-lg-0 mt-sm-4">Contacto</h4>
-            <p className='text-white-50'>22, Lorem ipsum dolor, consectetur adipiscing</p>
+            <p className='text-white-50'><i className="fa fa-envelope-o mr-3"></i>info@dripdrop.uy</p>
+            <p className="text-white-50 mb-0"><i className="fa fa-phone mr-3"></i>(2) 512 12 12</p>
+            <p className='text-white-50'>Galeria Uruguay, Av. 18 de Julio 966</p>
             <p className='text-white-50'>Lunes a Sábados de 9 a 21 hs / Domingos de 9 a 21 hs</p>
-            <p className="text-white-50 mb-0"><i className="fa fa-phone mr-3"></i>(541) 754-3010</p>
-            <p className='text-white-50'><i className="fa fa-envelope-o mr-3"></i>info@hsdf.com</p>
             </div>
         </div>
         <div className="row mt-5">
