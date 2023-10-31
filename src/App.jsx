@@ -7,13 +7,17 @@ import Home from './componentes/Home';
 import AdminLogin from './componentes/AdminLogin';
 import AdminPanel from './componentes/AdminPanel';
 import {jwtDecode} from 'jwt-decode';
-import Modal from './componentes/Modal';
+import AboutUsSection from './componentes/AboutUsSection';
+import DevolucionesSection from './componentes/DevolucionesSection';
+import TerminosSection from './componentes/TerminosSection';
+import PreguntasSection from './componentes/PreguntasSection';
 
 
 
 function App() {
 
-
+  //Texto para el banner con movimiento  
+  const infiniteTextValue = "👻 20% OFF CON EL CODIGO: OCTUBRE 👻";
 
 
   return (
@@ -21,19 +25,18 @@ function App() {
       
       <BrowserRouter>
 
-        <Modal/>
-
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home infiniteTextValue={infiniteTextValue} />} />
           
-          <Route path='/ropa' element={<ProductGallery titulo="ROPA" categoria="remera" />} />
-          <Route path='/calzado' element={<ProductGallery titulo="CALZADO" categoria="calzado"/>} />
-          <Route path='/accesorios' element={<ProductGallery titulo="ACCESORIOS" categoria="accesorios"/>} />
-          <Route path='/surf' element={<ProductGallery titulo="SURF" categoria="surf"/>} />
+          <Route path='/ropa' element={<ProductGallery titulo="ROPA" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
+          <Route path='/calzado' element={<ProductGallery titulo="CALZADO" categoria="calzado" infiniteTextValue={ infiniteTextValue }/>} />
+          <Route path='/accesorios' element={<ProductGallery titulo="ACCESORIOS" categoria="accesorios" infiniteTextValue={ infiniteTextValue }/>} />
+          <Route path='/surf' element={<ProductGallery titulo="SURF" categoria="surf" infiniteTextValue={ infiniteTextValue }/>} />
 
-
-
-
+          <Route path='/nosotros' element={<AboutUsSection infiniteTextValue={ infiniteTextValue }/>} />
+          <Route path='/terminos' element={<TerminosSection infiniteTextValue={ infiniteTextValue }/>} />
+          <Route path='/preguntas' element={<PreguntasSection infiniteTextValue={ infiniteTextValue }/>} />
+          <Route path='/devoluciones' element={<DevolucionesSection infiniteTextValue={ infiniteTextValue }/>} />
 
 
           <Route 

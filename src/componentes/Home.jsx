@@ -13,7 +13,7 @@ import { SwiperSlide } from 'swiper/react';
 import ShowImg from './ShowImg';
 import SubscriptionDiv from './SubscriptionDiv';
 
-function Home() {
+function Home(props) {
 
   const [masVendidos, setMasVendidos] = useState([]);
   const [masRecientes, setMasRecientes] = useState([]);
@@ -64,13 +64,11 @@ function Home() {
         }
       }
 
-    //Texto para el banner con movimiento  
-    const infiniteTextValue = "👻 20% OFF CON EL CODIGO: OCTUBRE 👻";
 
   return (
     <div>
       <Nav/>
-      <Carousel text={infiniteTextValue}/>
+      <Carousel infiniteTextValue={props.infiniteTextValue}/>
       <Banner/>
       
       <Subtitulo titulo="MÁS VENDIDO"/>
@@ -90,7 +88,7 @@ function Home() {
 
       <SubscriptionDiv/>
 
-      <Footer text={infiniteTextValue}/>
+      <Footer infiniteTextValue={props.infiniteTextValue}/>
     </div>
   )
 }

@@ -25,6 +25,10 @@
   max-height: 40px;
 }
 
+.invert-color{
+  filter: invert(1);
+}
+
 .nav-link a:after,
 .nav-link a:before {
   transition: all .5s;

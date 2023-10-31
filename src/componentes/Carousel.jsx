@@ -6,7 +6,7 @@ function Principal(props){
     return(
         <div className="div-principal shadow-lg">
 
-            <InfiniteText text={props.text}/>
+            <InfiniteText infiniteTextValue={props.infiniteTextValue}/>
 
             <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-indicators">
@@ -43,7 +43,7 @@ function Principal(props){
                 </button>
             </div>
 
-            <InfiniteText text={props.text}/>
+            <InfiniteText infiniteTextValue={props.infiniteTextValue}/>
 
         </div>
     );

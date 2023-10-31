@@ -7,8 +7,6 @@ import '../hojas-de-estilos/ProductGallery.css'
 
 function ProductGallery(props) {
 
-    const infiniteTextValue = "👻 20% OFF CON EL CODIGO: OCTUBRE 👻";
-
   return (
     <div>
         <Nav />
@@ -25,7 +23,7 @@ function ProductGallery(props) {
 
 
 
-        <Footer text={infiniteTextValue}/>
+        <Footer infiniteTextValue={props.infiniteTextValue}/>
     </div>
   )
 }

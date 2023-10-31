@@ -3,7 +3,7 @@ import '../hojas-de-estilos/InfiniteText.css'
 
 function InfiniteText(props) {
 
-    const textRepeat = props.text;
+    const textRepeat = props.infiniteTextValue;
 
   return (
     <div className={`scrolling_text ${props.margin ? 'mt-8' : ''}`} >
