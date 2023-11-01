@@ -11,7 +11,11 @@ import AboutUsSection from './componentes/AboutUsSection';
 import DevolucionesSection from './componentes/DevolucionesSection';
 import TerminosSection from './componentes/TerminosSection';
 import PreguntasSection from './componentes/PreguntasSection';
+import ScrollToTop from './componentes/ScrollToTop';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 
 function App() {
@@ -22,9 +26,11 @@ function App() {
 
   return (
     <div className="App">
-      
-      <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
 
+      <BrowserRouter>
+        <ScrollToTop />
+        
         <Routes>
           <Route path='/' element={<Home infiniteTextValue={infiniteTextValue} />} />
           
@@ -68,6 +74,7 @@ function App() {
         </Routes>
 
       </BrowserRouter>
+      </QueryClientProvider>
     </div>
   );
 }

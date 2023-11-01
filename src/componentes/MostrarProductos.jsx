@@ -1,55 +1,47 @@
-import React, { useState, useEffect } from 'react'
-import ProductCard from './ProductCard'
+import React from 'react';
+import ProductCard from './ProductCard';
+import { useQuery } from 'react-query';
 
 function MostrarProductos(props) {
-
-  const [traerProductos, setTraerProductos] = useState([]);
-
-  useEffect(() => {
-
-    // Realiza una solicitud Fetch para obtener los productos mas vendidos
-    fetch(`http://localhost:4000/api/v1/productos/${props.categoria}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setTraerProductos(data); // Guarda los datos en el estado
-      })
-      .catch((error) => {
-        console.error('Error al obtener los datos', error);
-      });
-
-  }, [props.categoria]);
-
-  function generarProductos(grupo){
-    if(grupo.length !== 0){
-      return(
-        grupo.map((p, index) =>{
-          return(
-            <div className='col-md-3 text-center' key={index}>
-              <ProductCard
-                titulo={p.nombre}
-                tipo={p.categoria}
-                precio={p.precio}
-                imgUrl={p.img}
-              />  
-            </div> 
-          );
-        
-        })
-      );
+  const { data: traerProductos, isLoading, isError } = useQuery(
+    ['productos', props.categoria],
+    async () => {
+      const response = await fetch(`http://localhost:4000/api/v1/productos/${props.categoria}`);
+      if (!response.ok) {
+        throw new Error('Error al obtener los datos');
+      }
+      const data = await response.json();
+      return data;
+    },
+    {
+      staleTime: 60000, // Establece un período de 60 segundos antes de consultar nuevamente
     }
+  );
+
+  if (isLoading) {
+    return <div>Cargando...</div>;
   }
 
+  if (isError) {
+    return <div>Error al obtener los datos</div>;
+  }
 
   return (
-    <div>    
-
-        <div className='row'>
-          
-            {generarProductos(traerProductos)}
-            
-        </div>
+    <div>
+      <div className='row'>
+        {traerProductos.map((p, index) => (
+          <div className='col-md-3 text-center' key={index}>
+            <ProductCard
+              titulo={p.nombre}
+              tipo={p.categoria}
+              precio={p.precio}
+              imgUrl={p.img}
+            />
+          </div>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default MostrarProductos
+export default MostrarProductos;

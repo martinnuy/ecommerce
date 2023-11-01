@@ -1,96 +1,80 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
+import { useQuery } from 'react-query';
 import Nav from './Nav';
 import Carousel from './Carousel';
 import Banner from './Banner';
 import Footer from './Footer';
 import Slider from './Slider';
 import Subtitulo from './Subtitulo';
-
-//import {destacados, ultimos} from '../data.js';
-
 import ProductCard from './ProductCard';
 import { SwiperSlide } from 'swiper/react';
 import ShowImg from './ShowImg';
 import SubscriptionDiv from './SubscriptionDiv';
 
 function Home(props) {
+  // Define una función para obtener los productos
+  const fetchProductos = async (categoria) => {
+    const response = await fetch(`http://localhost:4000/api/v1/productos/${categoria}`);
+    if (!response.ok) {
+      throw new Error('Error al obtener los datos');
+    }
+    const data = await response.json();
+    return data;
+  };
 
-  const [masVendidos, setMasVendidos] = useState([]);
-  const [masRecientes, setMasRecientes] = useState([]);
+  // Utiliza React Query para obtener los productos más vendidos
+  const { data: masVendidos, isLoading: isLoadingMasVendidos } = useQuery(
+    ['masVendidos'],
+    () => fetchProductos('masvendidos'),
+    {
+      staleTime: 60000, // Establece el período de caché en 60 segundos
+    }
+  );
 
+  // Utiliza React Query para obtener los productos más recientes
+  const { data: masRecientes, isLoading: isLoadingMasRecientes } = useQuery(
+    ['masRecientes'],
+    () => fetchProductos('masrecientes'),
+    {
+      staleTime: 60000, // Establece el período de caché en 60 segundos
+    }
+  );
 
-  useEffect(() => {
+  function generarProductosSlider(grupo) {
+    if (grupo.length !== 0) {
+      return grupo.map((p, index) => (
+        <SwiperSlide key={index}>
+          <ProductCard titulo={p.nombre} tipo={p.categoria} precio={p.precio} imgUrl={p.img} />
+        </SwiperSlide>
+      ));
+    }
+  }
 
-    // Realiza una solicitud Fetch para obtener los productos mas vendidos
-    fetch('http://localhost:4000/api/v1/productos/masvendidos')
-      .then((response) => response.json())
-      .then((data) => {
-        setMasVendidos(data); // Guarda los datos en el estado
-      })
-      .catch((error) => {
-        console.error('Error al obtener los datos', error);
-      });
-
-    // Realiza una solicitud Fetch para obtener los productos mas recientes
-      fetch('http://localhost:4000/api/v1/productos/masrecientes')
-      .then((response) => response.json())
-      .then((data) => {
-        setMasRecientes(data); // Guarda los datos en el estado
-      })
-      .catch((error) => {
-        console.error('Error al obtener los datos', error);
-      });
-
-  }, []);
-
-    //Esta funcion se encarga de generar los ProductCard que iran dentro de los slider, a partir de un arreglo.
-    function generarProductosSlider(grupo){
-        if(grupo.length !== 0){
-          return(
-            grupo.map((p, index) =>{
-              return(
-                <SwiperSlide key={index}> 
-                  <ProductCard
-                    titulo={p.nombre}
-                    tipo={p.categoria}
-                    precio={p.precio}
-                    imgUrl={p.img}
-                  />  
-                </SwiperSlide>
-              );
-            
-            })
-          );
-        }
-      }
-
+  if (isLoadingMasVendidos || isLoadingMasRecientes) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div>
-      <Nav/>
-      <Carousel infiniteTextValue={props.infiniteTextValue}/>
-      <Banner/>
-      
-      <Subtitulo titulo="MÁS VENDIDO"/>
+      <Nav />
+      <Carousel infiniteTextValue={props.infiniteTextValue} />
+      <Banner />
 
-      
-      <Slider arregloPrendas ={generarProductosSlider(masVendidos)} />
-      
+      <Subtitulo titulo="MÁS VENDIDO" />
 
+      <Slider arregloPrendas={generarProductosSlider(masVendidos)} />
 
-      <Subtitulo titulo="ULTIMOS LANZAMIENTOS"/>
+      <Subtitulo titulo="ULTIMOS LANZAMIENTOS" />
 
-      <Slider arregloPrendas ={generarProductosSlider(masRecientes)} />
+      <Slider arregloPrendas={generarProductosSlider(masRecientes)} />
 
+      <ShowImg />
 
-      <ShowImg/>
+      <SubscriptionDiv />
 
-
-      <SubscriptionDiv/>
-
-      <Footer infiniteTextValue={props.infiniteTextValue}/>
+      <Footer infiniteTextValue={props.infiniteTextValue} />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
