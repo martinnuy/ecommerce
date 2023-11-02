@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
+import CachedImage from './CachedImage';
 
 
 function NavSimple(props) {
@@ -11,10 +12,11 @@ function NavSimple(props) {
             <div className={`row my-3 p-0${props.center ? ' mx-auto' : ' ms-3'}`} id="nav-row-div">
             
             <Link className="col-sm-12 col-md-4 col-lg-3 m-0 navbar-brand text-center" to="/">
-                <img 
+                <CachedImage 
                 className="logo"
                 src={require('../imagenes/logo.png')} 
-                alt="Logo" />
+                alt="Logo" 
+                />
             </Link>
 
             </div>

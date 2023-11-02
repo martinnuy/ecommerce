@@ -1,8 +1,10 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import { useQuery } from 'react-query';
+import LoadSpinner from './LoadSpinner';
 
 function MostrarProductos(props) {
+  
   const { data: traerProductos, isLoading, isError } = useQuery(
     ['productos', props.categoria],
     async () => {
@@ -19,7 +21,9 @@ function MostrarProductos(props) {
   );
 
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return (
+      <LoadSpinner />
+      )
   }
 
   if (isError) {
@@ -36,6 +40,7 @@ function MostrarProductos(props) {
               tipo={p.categoria}
               precio={p.precio}
               imgUrl={p.img}
+              blurImage='true'
             />
           </div>
         ))}

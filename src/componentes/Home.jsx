@@ -10,6 +10,7 @@ import ProductCard from './ProductCard';
 import { SwiperSlide } from 'swiper/react';
 import ShowImg from './ShowImg';
 import SubscriptionDiv from './SubscriptionDiv';
+import LoadSpinner from './LoadSpinner';
 
 function Home(props) {
   // Define una función para obtener los productos
@@ -44,14 +45,16 @@ function Home(props) {
     if (grupo.length !== 0) {
       return grupo.map((p, index) => (
         <SwiperSlide key={index}>
-          <ProductCard titulo={p.nombre} tipo={p.categoria} precio={p.precio} imgUrl={p.img} />
+          <ProductCard titulo={p.nombre} tipo={p.categoria} precio={p.precio} imgUrl={p.img} blurImage="true" />
         </SwiperSlide>
       ));
     }
   }
 
   if (isLoadingMasVendidos || isLoadingMasRecientes) {
-    return <div>Cargando...</div>;
+    return (
+      <LoadSpinner center="true"/>
+    )
   }
 
   return (

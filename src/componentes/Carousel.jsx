@@ -1,6 +1,7 @@
 import React from "react";
 import '../hojas-de-estilos/Carousel.css'
 import InfiniteText from "./InfiniteText";
+import CachedImage from "./CachedImage";
 
 function Principal(props){
     return(
@@ -18,19 +19,19 @@ function Principal(props){
                 </div>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                    <img src={require('../imagenes/carousel/1.jpg')} className="d-block w-100" alt="..." />
+                    <CachedImage src={require('../imagenes/carousel/1.jpg')} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">
-                    <img src={require('../imagenes/carousel/2.jpg')} className="d-block w-100" alt="..." />
+                    <CachedImage src={require('../imagenes/carousel/2.jpg')} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">
-                    <img src={require('../imagenes/carousel/3.webp')} className="d-block w-100" alt="..." />
+                    <CachedImage src={require('../imagenes/carousel/3.webp')} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">
-                    <img src={require('../imagenes/carousel/4.webp')} className="d-block w-100" alt="..." />
+                    <CachedImage src={require('../imagenes/carousel/4.webp')} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">
-                    <img src={require('../imagenes/carousel/5.webp')} className="d-block w-100" alt="..." />
+                    <CachedImage src={require('../imagenes/carousel/5.webp')} className="d-block w-100" alt="..." />
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

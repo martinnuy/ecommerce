@@ -1,10 +1,11 @@
 import React from 'react';
 import '../hojas-de-estilos/Banner.css';
+import CachedImage from './CachedImage';
 
 function Banner() {
   return (
     <div className='banner-div shadow-lg mb-5'>
-        <img className='img-fluid' src={require('../imagenes/banner.png')} alt="" />
+        <CachedImage className='img-fluid' src={require('../imagenes/banner.png')} alt="" />
     </div>
   )
 }

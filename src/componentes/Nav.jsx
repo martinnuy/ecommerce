@@ -2,6 +2,7 @@ import React from "react";
 import '../hojas-de-estilos/Nav.css';
 import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser, AiOutlineHeart  } from 'react-icons/ai';
 import {Link} from 'react-router-dom';
+import CachedImage from "./CachedImage";
 
 function Nav(){
 return(
@@ -13,10 +14,11 @@ return(
       
 
       <Link className="col-sm-12 col-md-4 col-lg-3 m-0 navbar-brand text-center" to="/">
-        <img 
+        <CachedImage 
           className="logo"
           src={require('../imagenes/logo.png')} 
-          alt="Logo" />
+          alt="Logo" 
+        />
       </Link>
 
 

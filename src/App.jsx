@@ -21,7 +21,7 @@ const queryClient = new QueryClient();
 function App() {
 
   //Texto para el banner con movimiento  
-  const infiniteTextValue = "👻 20% OFF CON EL CODIGO: OCTUBRE 👻";
+  const infiniteTextValue = "👻 20% OFF CON EL CODIGO: Drip 👻";
 
 
   return (

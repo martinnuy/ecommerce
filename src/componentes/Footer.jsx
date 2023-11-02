@@ -3,6 +3,7 @@ import '../hojas-de-estilos/Footer.css';
 import InfiniteText from './InfiniteText';
 import { Link } from 'react-router-dom';
 import { AiOutlineClockCircle, AiOutlineEnvironment, AiOutlineMail, AiOutlinePhone } from 'react-icons/ai';
+import CachedImage from './CachedImage';
 
 function Footer(props) {
     
@@ -18,10 +19,11 @@ function Footer(props) {
             <div className="col-lg-5 col-xs-12 about-company">
 
             <Link to="/">
-                <img 
+                <CachedImage 
                 className="logo"
                 src={require('../imagenes/logo.png')} 
-                alt="Logo" />
+                alt="Logo" 
+                />
              </Link>
 
             <p className="pr-5 text-white-50 mt-2">

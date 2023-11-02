@@ -1,11 +1,12 @@
 import React from 'react'
 import '../hojas-de-estilos/ProductCard.css'
+import CachedImage from './CachedImage'
 
 function ProductCard(props) {
   return (
     <div className="card border-0 producto-slider mx-auto" style={{width: '18rem'}}>
         <a className='remove-link-style' href={props.imgUrl}>
-            <img className="card-img-top img-slider" src={ props.imgUrl } alt="Card cap"/>
+            <CachedImage className="card-img-top img-slider" src={ props.imgUrl } alt="Card cap" blurImage={props.blurImage} />
 
           <div className="card-body">
                 <h5 className="card-title mb-1 color-link-style">{props.titulo.toUpperCase()}</h5>

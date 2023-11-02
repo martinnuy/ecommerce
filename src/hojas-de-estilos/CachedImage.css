@@ -1,0 +1,16 @@
+.img-blur {
+    transition: filter 0.5s ease; /* Agrega una transición suave al filtro */
+  }
+  
+  .img-blur.blur-effect {
+    filter: blur(5px); /* Aplica un filtro blur inicial */
+  
+    /* Agrega una animación para quitar el blur después de 3 segundos */
+    animation: removeBlur .7s linear forwards;
+  }
+  
+  @keyframes removeBlur {
+    to {
+      filter: blur(0); /* Quita el filtro blur */
+    }
+  }
