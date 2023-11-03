@@ -5,7 +5,7 @@ function AgregarProducto() {
     //Esta funcion se encarga de traer la lista de categorias desde la base de datos y ponerlas en el <select> correspondiente
     const getCategories = async () =>{
         try {
-            const response = await fetch('http://localhost:4000/api/v1/categoria', {
+            const response = await fetch( process.env.REACT_APP_API_URI + '/categoria', {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ function AgregarProducto() {
 
       try {
         // Enviar la solicitud POST al servidor con el token en el encabezado
-        const response = await fetch('http://localhost:4000/api/v1/productos', {
+        const response = await fetch( process.env.REACT_APP_API_URI + '/productos', {
           method: 'POST',
           body: formData,
           headers: {

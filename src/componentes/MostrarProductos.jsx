@@ -8,7 +8,7 @@ function MostrarProductos(props) {
   const { data: traerProductos, isLoading, isError } = useQuery(
     ['productos', props.categoria],
     async () => {
-      const response = await fetch(`http://localhost:4000/api/v1/productos/${props.categoria}`);
+      const response = await fetch( process.env.REACT_APP_API_URI + `/productos/${props.categoria}`);
       if (!response.ok) {
         throw new Error('Error al obtener los datos');
       }
