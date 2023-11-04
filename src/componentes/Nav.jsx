@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import '../hojas-de-estilos/Nav.css';
 import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser, AiOutlineHeart  } from 'react-icons/ai';
 import {Link} from 'react-router-dom';
 import CachedImage from "./CachedImage";
 
 function Nav(){
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
 return(
   <nav className="navbar stroke navbar-expand-lg navbar-dark bg-dark fixed-top nav-wrap p-0 shadow-lg">
   
@@ -23,35 +33,39 @@ return(
 
 
       
-      <div className="col-md-4 collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <div className={`col-md-4 collapse navbar-collapse justify-content-center ${isMenuOpen ? 'show' : ''}`} id="navbarSupportedContent">
 
 
         <ul className="navbar-nav mb-2 mb-lg-0">
           <li className="nav-item my-3 mx-3 nav-link" >
-            <Link className="nav-link active text-center" aria-current="page" to="/ropa">ROPA</Link>
+            <Link className="nav-link active text-center" aria-current="page" onClick={closeMenu} to="/ropa">ROPA</Link>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <Link className="nav-link active text-center" aria-current="page" to="/calzado">CALZADO</Link>
+            <Link className="nav-link active text-center" aria-current="page" onClick={closeMenu} to="/calzado">CALZADO</Link>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <Link className="nav-link active text-center" aria-current="page" to="/accesorios">ACCESORIOS</Link>
+            <Link className="nav-link active text-center" aria-current="page" onClick={closeMenu} to="/accesorios">ACCESORIOS</Link>
           </li>
           <li className="nav-item my-3 mx-3 nav-link">
-            <Link className="nav-link active text-center" aria-current="page" to="/surf">SURF</Link>
+            <Link className="nav-link active text-center" aria-current="page" onClick={closeMenu} to="/surf">SURF</Link>
           </li>
         </ul>
 
       </div>
       
       <div className="col-sm-12 col-md-4 col-lg-3 py-0 px-5 me-5 text-end" id="icons-section">
-        <AiOutlineSearch className="nav-icons text-light mx-2" />
-        <AiOutlineShoppingCart className="nav-icons text-light mx-2" />
-        <AiOutlineHeart className="nav-icons text-light mx-2" />
-        <AiOutlineUser className="nav-icons text-light mx-2" />
-
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <div className="d-flex justify-content-end align-items-center">
+          <AiOutlineSearch className="nav-icons mx-2" />
+          <AiOutlineShoppingCart className="nav-icons mx-2" />
+          <AiOutlineHeart className="nav-icons mx-2" />
+          <AiOutlineUser className="nav-icons mx-2" />
+          
+          <button className={`navbar-toggler nav-hamb-button mb-1 me-1${!isMenuOpen ? ' collapsed' : ''}`} type="button" data-bs-toggle="collapse" onClick={toggleMenu} data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+        </div>
       </div>
 
       

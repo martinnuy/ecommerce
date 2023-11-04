@@ -1,3 +1,16 @@
 .div-principal{
     margin-top: 200px;
 }
+
+.div-img-carousel{
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .carousel-img
+    {
+        width: 300%!important;
+        transform: translateX(-45%);
+        object-fit: contain;
+    }
+  }
