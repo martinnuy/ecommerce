@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavSimple from './NavSimple'
 import PanelButton from './PanelButton'
 import '../hojas-de-estilos/AdminPanel.css';
 import AgregarProducto from './AgregarProducto';
+import MostrarProductos from './MostrarProductos';
+import Subtitulo from './Subtitulo';
+import AgregarCategoria from './AgregarCategoria';
 
 function AdminPanel() {
 
+  const [ventana, setVentana] = useState(<AgregarProducto/>);
 
   const logoutFunction = ()=>{
       localStorage.removeItem('token');
@@ -15,27 +19,37 @@ function AdminPanel() {
   return (
     <div>
         <NavSimple />
-
+      
       <div className="container-fluid">
         <div className="row">
-          <nav className="col-md-2 d-none d-md-block bg-dark sidebar vh-100">
+          <nav className="col-md-2 d-none d-md-block bg-dark sidebar fixed-top vh-100 z-index-nav">
             <div className="position-sticky div-link-panel">
               <ul className="nav flex-column">
                 <PanelButton tittle="Inicio"/>
                 <PanelButton tittle="Pedidos"/>
                 <PanelButton tittle="Estadisticas"/>
-                <PanelButton tittle="Productos"/>
-                <PanelButton tittle="Agregar Producto"/>
-                <PanelButton tittle="Agregar Categoria"/>
+                
+                <PanelButton tittle="Productos" onclick={ ()=>{
+                  setVentana(
+                    <div className='div-principal'>
+                      <Subtitulo titulo="Todos los Productos"/>
+                      <MostrarProductos categoria=""/>
+                    </div>
+                  )
+                  } }/>
+                
+                <PanelButton tittle="Agregar Producto" onclick={ ()=>{setVentana(<AgregarProducto/>)} }/>
+                <PanelButton tittle="Categorias" onclick={ ()=>{setVentana(<AgregarCategoria/>)} }/>
                 <PanelButton tittle="Usuarios"/>
                 <PanelButton tittle="Ofertas"/>
-                <PanelButton tittle="Cerrar Sesion" function={logoutFunction}/>
+                <PanelButton tittle="Cerrar Sesion" onclick={logoutFunction}/>
               </ul>
             </div>
           </nav>
+          <div className='col-md-2'></div>
           <main className="col-md-10">
             
-            <AgregarProducto/>
+            {ventana}
 
           </main>
         </div>

@@ -9,7 +9,7 @@ function PanelButton(props) {
 
   return (
     <li className="nav-item my-1">
-        <Link className="nav-link active footer-link panel-button" to={props.link} onClick={props.function} >
+        <Link className="nav-link active footer-link panel-button" to={props.link} onClick={props.onclick} >
             <BsDot/>
             {props.tittle}
         </Link>
