@@ -86,7 +86,8 @@ function AgregarProducto() {
             setImagen(null);
             setTalles('');
         } else {
-          throw new Error('Error al agregar el producto');
+          const errorFromServer = await response.json();
+          throw new Error(errorFromServer.error);
         }
     } catch (error) {
         // Mostrar un mensaje de error

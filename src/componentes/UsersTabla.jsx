@@ -52,7 +52,7 @@ function UsersTabla() {
     
     <div className="div-principal">
       <Subtitulo titulo="Informacion de Usuarios" />
-      <table className="table table-light table-striped">
+      <table className="table table-dark table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -68,7 +68,7 @@ function UsersTabla() {
         <tbody>
 
         {traerUsuarios.map((p, index) => (
-          <tr key={index}>
+          <tr key={index} className={`${(index % 2) === 0 ? 'table-danger' : 'table-light'}`}>
             <th scope="row">{index + 1}</th>
             <td>{ p.username }</td>
             <td>{ p.email }</td>

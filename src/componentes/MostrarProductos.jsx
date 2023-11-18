@@ -8,7 +8,14 @@ function MostrarProductos(props) {
   const { data: traerProductos, isLoading, isError } = useQuery(
     ['productos', props.categoria],
     async () => {
-      const response = await fetch( process.env.REACT_APP_API_URI + `/productos/${props.categoria}`);
+      const token = localStorage.getItem('token');
+      const response = await fetch( process.env.REACT_APP_API_URI + `/productos/${props.categoria}`,{
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (!response.ok) {
         throw new Error('Error al obtener los datos');
       }
@@ -40,6 +47,8 @@ function MostrarProductos(props) {
               tipo={p.categoria}
               precio={p.precio}
               imgUrl={p.img}
+              id={p._id}
+              slug={p.slug}
               blurImage='true'
             />
           </div>

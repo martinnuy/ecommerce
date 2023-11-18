@@ -57,13 +57,13 @@ return(
         <div className="d-flex justify-content-end align-items-center">
           <AiOutlineSearch className="nav-icons mx-2" />
           <AiOutlineShoppingCart className="nav-icons mx-2" />
-          <AiOutlineHeart className="nav-icons mx-2" />
+          <Link to="/favoritos"> <AiOutlineHeart className="nav-icons mx-2" /> </Link>
           <AiOutlineUser className="nav-icons mx-2" />
           
           <button className={`navbar-toggler nav-hamb-button mb-1 me-1${!isMenuOpen ? ' collapsed' : ''}`} type="button" data-bs-toggle="collapse" onClick={toggleMenu} data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="icon-bar top-bar"></span>
-            <span class="icon-bar middle-bar"></span>
-            <span class="icon-bar bottom-bar"></span>
+          <span className="icon-bar top-bar"></span>
+            <span className="icon-bar middle-bar"></span>
+            <span className="icon-bar bottom-bar"></span>
           </button>
         </div>
       </div>

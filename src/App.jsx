@@ -14,6 +14,7 @@ import PreguntasSection from './componentes/PreguntasSection';
 import ScrollToTop from './componentes/ScrollToTop';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
+import ProductDetail from './componentes/ProductDetail';
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,7 @@ const queryClient = new QueryClient();
 function App() {
 
   //Texto para el banner con movimiento  
-  const infiniteTextValue = "👻 20% OFF CON EL CODIGO: Drip 👻";
+  const infiniteTextValue = "🎅 20% OFF CON EL CODIGO: Drip 🎅";
 
 
   return (
@@ -43,6 +44,17 @@ function App() {
           <Route path='/terminos' element={<TerminosSection infiniteTextValue={ infiniteTextValue }/>} />
           <Route path='/preguntas' element={<PreguntasSection infiniteTextValue={ infiniteTextValue }/>} />
           <Route path='/devoluciones' element={<DevolucionesSection infiniteTextValue={ infiniteTextValue }/>} />
+          
+          <Route path='/p/:slug' element={<ProductDetail infiniteTextValue={ infiniteTextValue } />} />
+
+
+          <Route path='/favoritos' element={ 
+            localStorage.getItem('token') != null ? (
+              <ProductGallery titulo="FAVORITOS" categoria="favoritos" infiniteTextValue={ infiniteTextValue }/>
+            ) : (
+              <Navigate to="/admin" />
+            )
+           } />
 
 
           <Route 
