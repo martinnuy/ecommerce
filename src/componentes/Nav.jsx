@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import '../hojas-de-estilos/Nav.css';
 import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser, AiOutlineHeart  } from 'react-icons/ai';
-import {Link} from 'react-router-dom';
+import { IoIosLogOut } from "react-icons/io";
+import { CiShoppingTag } from "react-icons/ci";
+import {Link, useNavigate} from 'react-router-dom';
 import CachedImage from "./CachedImage";
 
 function Nav(){
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -13,6 +16,12 @@ function Nav(){
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const logoutFunction = () => {
+    localStorage.removeItem("token");
+    navigate('/');
+    window.location.reload();
   };
 
 return(
@@ -56,9 +65,25 @@ return(
       <div className="col-sm-12 col-md-4 col-lg-3 py-0 px-5 me-5 text-end" id="icons-section">
         <div className="d-flex justify-content-end align-items-center">
           <AiOutlineSearch className="nav-icons mx-2" />
-          <AiOutlineShoppingCart className="nav-icons mx-2" />
+          <Link to="/cart"> <AiOutlineShoppingCart className="nav-icons mx-2" /> </Link>
           <Link to="/favoritos"> <AiOutlineHeart className="nav-icons mx-2" /> </Link>
-          <AiOutlineUser className="nav-icons mx-2" />
+          
+          {
+            (localStorage.getItem('token')) ? (
+              <div className="dropdown">
+                <Link to="" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> <AiOutlineUser className="nav-icons mx-2 dropdown-toggle" /> </Link>
+
+
+                <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-custom dropdown-menu-end">
+                  <li><Link className="dropdown-item py-3" to="/user"> <AiOutlineUser className="nav-icons me-2 dropdown-toggle" />Mis Datos</Link></li>
+                  <li><Link className="dropdown-item py-3" to=""> <CiShoppingTag className="nav-icons me-2" />Compras</Link></li>
+                  <li><Link className="dropdown-item py-3" to="" onClick={logoutFunction}> <IoIosLogOut className="nav-icons me-2" />Cerrar Sesion</Link></li>
+                </ul>
+              </div>
+            ) : (
+            <Link to="/login" > <AiOutlineUser className="nav-icons mx-2 dropdown-toggle" /> </Link>
+            )
+          }
           
           <button className={`navbar-toggler nav-hamb-button mb-1 me-1${!isMenuOpen ? ' collapsed' : ''}`} type="button" data-bs-toggle="collapse" onClick={toggleMenu} data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="icon-bar top-bar"></span>

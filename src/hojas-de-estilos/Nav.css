@@ -16,6 +16,7 @@
 .nav-icons{
   font-size: 25px;
   color: #a7a7a7;
+  transition: color .2s;
 }
 
 .nav-link{
@@ -59,7 +60,14 @@
   border: none;
 }
 
+.nav-icons:hover{
+  transition: color .2s;
+  color: #e91e63;
+}
 
+.dropdown-menu-custom{
+  background-color: #212529;
+}
 
 @media screen and (max-width: 991px) {
   #navbarSupportedContent {

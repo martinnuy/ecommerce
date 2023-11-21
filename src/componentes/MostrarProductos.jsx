@@ -2,6 +2,9 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import { useQuery } from 'react-query';
 import LoadSpinner from './LoadSpinner';
+import { GiBrokenHeart } from "react-icons/gi";
+import { MdOutlineShoppingBag } from "react-icons/md";
+import '../hojas-de-estilos/MostrarProductos.css';
 
 function MostrarProductos(props) {
   
@@ -27,14 +30,42 @@ function MostrarProductos(props) {
     }
   );
 
+  //Spinner
   if (isLoading) {
     return (
       <LoadSpinner />
       )
   }
 
+  //Control de Error
   if (isError) {
     return <div>Error al obtener los datos</div>;
+  }
+
+  //En caso de que no existan prodctos favoritos
+  if(props.categoria === 'favoritos' && traerProductos.length === 0){
+    return (
+        <div className="container mt-5 void-section rounded">
+          <div className="text-center">
+            <GiBrokenHeart size={100} />
+            <p className="mt-3 fs-5">Aún no tienes productos en Favoritos...</p>
+            <p className='fs-5 text-secondary'>Agrega aquí los productos que te gustaron para poder verlos más tarde.</p>
+          </div>
+        </div>
+    )
+  }
+
+  //En caso de que no existan productos en el carrito
+  if(props.categoria === 'carrito' && traerProductos.length === 0){
+    return (
+      <div className="container mt-5 void-section rounded">
+      <div className="text-center">
+         <MdOutlineShoppingBag size={100} />
+        <p className="mt-3 fs-5">¡Empieza un carrito de compras!</p>
+        <p className='fs-5 text-secondary'>¡Inicia tu selección de productos y disfruta de la experiencia de compra!</p>
+      </div>
+    </div>
+    )
   }
 
   return (

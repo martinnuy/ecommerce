@@ -45,7 +45,14 @@ function Home(props) {
     if (grupo.length !== 0) {
       return grupo.map((p, index) => (
         <SwiperSlide key={index}>
-          <ProductCard titulo={p.nombre} tipo={p.categoria} precio={p.precio} imgUrl={p.img} blurImage="true" />
+          <ProductCard 
+          titulo={p.nombre} 
+          tipo={p.categoria} 
+          precio={p.precio} 
+          imgUrl={p.img}
+          id={p._id}
+          slug={p.slug} 
+          blurImage="true" />
         </SwiperSlide>
       ));
     }

@@ -48,14 +48,46 @@ function App() {
           <Route path='/p/:slug' element={<ProductDetail infiniteTextValue={ infiniteTextValue } />} />
 
 
+
+          <Route path='/user' element={ 
+            localStorage.getItem('token') != null ? (
+              <ProductGallery titulo="Usuario" categoria="" infiniteTextValue={ infiniteTextValue }/>
+            ) : (
+              <Navigate to="/login" />
+            )
+           } />
+
+          <Route path='/cart' element={ 
+            localStorage.getItem('token') != null ? (
+              <ProductGallery titulo="Carrito" categoria="" infiniteTextValue={ infiniteTextValue }/>
+            ) : (
+              <Navigate to="/login" />
+            )
+           } />
+
           <Route path='/favoritos' element={ 
             localStorage.getItem('token') != null ? (
               <ProductGallery titulo="FAVORITOS" categoria="favoritos" infiniteTextValue={ infiniteTextValue }/>
             ) : (
-              <Navigate to="/admin" />
+              <Navigate to="/login" />
             )
            } />
 
+
+          <Route 
+              path='/login' 
+              element={
+                localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
+                  <Navigate to="/admin/panel" />
+                ) : (
+                  localStorage.getItem('token') == null ? (
+                    <AdminLogin />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                )
+              }
+            /> 
 
           <Route 
               path='/admin' 
