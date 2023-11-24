@@ -15,11 +15,47 @@ import ScrollToTop from './componentes/ScrollToTop';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ProductDetail from './componentes/ProductDetail';
+import { useEffect } from 'react';
+import Carrito from './componentes/Carrito';
 
 const queryClient = new QueryClient();
 
 
 function App() {
+
+  const verificarExpiracionToken = () => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+
+        if (decodedToken.exp * 1000 < Date.now()) {
+          // El token ha expirado, desloguear al usuario.
+          localStorage.removeItem("token");
+          window.location.href = '/';
+        }
+
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        // Manejar el error si hay problemas al decodificar el token.
+      }
+    }
+  };
+
+  //Se ejecuta el entrar a la pagina
+  verificarExpiracionToken();
+
+  useEffect(() => {
+    // Verificar la expiración del token cada 1 minutos (ajusta según tus necesidades).
+    const intervalo = setInterval(verificarExpiracionToken, 1 * 60 * 1000);
+
+    // Limpiar el intervalo al desmontar el componente.
+    return () => clearInterval(intervalo);
+  }, []);
+
+
+
 
   //Texto para el banner con movimiento  
   const infiniteTextValue = "🎅 20% OFF CON EL CODIGO: Drip 🎅";
@@ -59,7 +95,7 @@ function App() {
 
           <Route path='/cart' element={ 
             localStorage.getItem('token') != null ? (
-              <ProductGallery titulo="Carrito" categoria="" infiniteTextValue={ infiniteTextValue }/>
+              <Carrito titulo="CARRITO" categoria="carrito" infiniteTextValue={ infiniteTextValue }/>
             ) : (
               <Navigate to="/login" />
             )

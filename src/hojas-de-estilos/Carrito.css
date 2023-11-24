@@ -1,0 +1,24 @@
+.red-hover-link{
+    transition: color .2s;
+    color: #212529;
+    text-decoration: none;
+}
+
+.red-hover-link:hover{
+    transition: color .2s;
+    color: #e91e63;
+}
+
+
+
+@media screen and (max-width: 767px) {
+    .resize-h5{
+        font-size: 0.8rem;
+    }
+  }
+
+  @media screen and (max-width: 280px) {
+    .resize-h5{
+        font-size: 0.5rem;
+    }
+  }
