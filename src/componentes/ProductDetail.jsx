@@ -27,6 +27,12 @@ const ProductDetail = (props) => {
     setQuantity(parseInt(event.target.value, 10));
   };
 
+  const sumarORestar = (number) => {
+    if((quantity + number) > 0){
+      setQuantity(quantity + number);
+    }
+  }
+
   const handleSizeChange = (event) => {
     setSize(event.target.value);
   };
@@ -76,21 +82,14 @@ const ProductDetail = (props) => {
                 <span className="text-muted">Disponibilidad:</span> En stock
               </div>
               <div className="mb-4">
-                <label htmlFor="quantity" className="form-label">
+                <label htmlFor="quantity" className="form-label d-block">
                   Cantidad:
                 </label>
-                <input
-                  type="number"
-                  id="quantity"
-                  className="form-control"
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                  min="1"
-                />
 
-                <div className="mt-3 rounded-pill d-inline-block" style={{ alignItems: 'center', backgroundColor: '#e2e2e2' }}>
+                <div className="rounded-pill d-inline-block" style={{ alignItems: 'center', backgroundColor: '#e2e2e2' }}>
                   <button
                     className="btn btn-danger rounded-pill d-inline counter-button"
+                    onClick={()=>sumarORestar(-1)}
                   >
                     -
                   </button>
@@ -98,7 +97,7 @@ const ProductDetail = (props) => {
                     <input
                       type="number"
                       id="quantity"
-                      className="form-control counter-input d-inline"
+                      className="form-control counter-input d-inline no-spin"
                       value={quantity}
                       onChange={handleQuantityChange}
                       min="1"
@@ -106,68 +105,60 @@ const ProductDetail = (props) => {
                   </div>
                   <button
                     className="btn btn-danger rounded-pill d-inline counter-button"
+                    onClick={()=>sumarORestar(1)}
                   >
                     +
                   </button>
                 </div>
               </div>
               <div className="mb-4">
-                <label htmlFor="size" className="form-label">
+                <p className="form-label">
                   Talle:
-                </label>
+                </p>
                 <div>
                   <button
                     type="button"
-                    class="btn p-0 btn-outline-dark mx-2 custom-color-button"
+                    className="btn p-0 btn-outline-dark mx-2 custom-color-button"
                   >
                     S
                   </button>
                   <button
                     type="button"
-                    class="btn p-0 btn-outline-dark mx-2 custom-color-button"
+                    className="btn p-0 btn-outline-dark mx-2 custom-color-button"
                   >
                     M
                   </button>
                   <button
                     type="button"
-                    class="btn p-0 btn-outline-dark mx-2 custom-color-button"
+                    className="btn p-0 btn-outline-dark mx-2 custom-color-button"
                   >
                     L
                   </button>
                   <button
                     type="button"
-                    class="btn p-0 btn-outline-dark mx-2 custom-color-button"
+                    className="btn p-0 btn-outline-dark mx-2 custom-color-button"
                   >
                     XL
                   </button>
                 </div>
               </div>
               <div className="mb-4">
-                <label htmlFor="color" className="form-label">
+                <p className="form-label">
                   Color:
-                </label>
-                <select
-                  id="color"
-                  className="form-select"
-                  value={color}
-                  onChange={handleColorChange}
-                >
-                  <option value="Rojo">Rojo</option>
-                  <option value="Azul">Azul</option>
-                  <option value="Verde">Verde</option>
-                  <option value="Negro">Negro</option>
-                </select>
-
-                <button
-                  type="button"
-                  class="btn custom-color-button mt-3 mx-2"
-                  style={{ backgroundColor: "black" }}
-                ></button>
-                <button
-                  type="button"
-                  class="btn custom-color-button mt-3 mx-2"
-                  style={{ backgroundColor: "white" }}
-                ></button>
+                </p>
+                {
+                  product.coloresDisponibles.map((producto, index) =>{
+                    return (
+                      <button
+                        type="button"
+                        className="btn custom-color-button mx-2"
+                        style={{ backgroundColor: producto.valorDelColor }}
+                        value={producto.nombreDelColor}
+                        key={index}
+                      ></button>)
+                  })
+                }
+                
               </div>
               <div></div>
               <button className="col-md-12 mt-2 btn btn-danger boton-login-adm">

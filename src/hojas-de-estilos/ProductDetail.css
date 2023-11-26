@@ -29,3 +29,14 @@
     border: none;
     box-shadow: none;
 }
+
+.no-spin::-webkit-inner-spin-button, .no-spin::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    appearance: none;
+    margin: 0 !important;
+}
+
+.no-spin {
+    appearance: none;
+    -moz-appearance:textfield !important;
+}
