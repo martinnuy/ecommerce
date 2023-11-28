@@ -103,7 +103,7 @@ function App() {
 
           <Route path='/favoritos' element={ 
             localStorage.getItem('token') != null ? (
-              <ProductGallery titulo="FAVORITOS" categoria="favoritos" infiniteTextValue={ infiniteTextValue }/>
+              <ProductGallery titulo="FAVORITOS" categoria="favoritos" infiniteTextValue={ infiniteTextValue } actualizarEnEntrar='true'/>
             ) : (
               <Navigate to="/login" />
             )

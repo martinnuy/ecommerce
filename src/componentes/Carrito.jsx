@@ -110,10 +110,21 @@ function Carrito(props) {
                   <Link className="red-hover-link" to={'../p/' + producto.slug}><h5 className="font-weight-bold resize-h5">{producto.nombre}</h5></Link>
                   <div className="row product-desc">
                     <div className="size mr-1 col-md-12 text-center p-0">
-                      <span className="text-grey px-1 resize-h5">Talle: <span className="fw-bold resize-h5">{producto.talle}</span> </span>
+                      { (producto.talle !== '') ? (
+                          <span className="text-grey px-1 resize-h5">Talle: <span className="fw-bold resize-h5">{producto.talle}</span> </span>
+                        ):(
+                          <span></span>
+                        )
+                      }
                     </div>
                     <div className="color col-md-12 text-center p-0">
-                      <span className="text-grey px-1 resize-h5"> Color: <span className="fw-bold resize-h5">{producto.color}</span> </span>
+                      { (producto.color !== '') ? (
+                            <span className="text-grey px-1 resize-h5"> Color: <span className="fw-bold resize-h5">{producto.color}</span> </span>
+                          ):(
+                            <span></span>
+                          )
+                        }
+                      
                     </div>
                   </div>
                 </div>

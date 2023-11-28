@@ -16,7 +16,7 @@ function ProductGallery(props) {
           <Subtitulo titulo={props.titulo}/>
 
 
-          <MostrarProductos categoria={props.categoria}/>
+          <MostrarProductos categoria={props.categoria} actualizarEnEntrar={props.actualizarEnEntrar} />
 
 
         </div>

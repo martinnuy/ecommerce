@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductCard from './ProductCard';
 import { useQuery } from 'react-query';
 import LoadSpinner from './LoadSpinner';
@@ -8,7 +8,7 @@ import '../hojas-de-estilos/MostrarProductos.css';
 
 function MostrarProductos(props) {
   
-  const { data: traerProductos, isLoading, isError } = useQuery(
+  const { data: traerProductos, refetch, isLoading, isError } = useQuery(
     ['productos', props.categoria],
     async () => {
       const token = localStorage.getItem('token');
@@ -29,6 +29,14 @@ function MostrarProductos(props) {
       staleTime: 60000, // Establece un período de 60 segundos antes de consultar nuevamente
     }
   );
+
+  useEffect(() => {
+    // Verifica la condición deseada, por ejemplo, si una propiedad específica cambia
+    if (props.actualizarEnEntrar) {
+      // Vuelve a consultar los datos utilizando la función refetch
+      refetch();
+    }
+  }, [props.actualizarEnEntrar, refetch]);
 
   //Spinner
   if (isLoading) {

@@ -5,6 +5,15 @@
     border-radius: 100%;
     width: 2.3rem;
     height: 2.3rem;
+    box-shadow: none;
+}
+
+.custom-color-button:focus, .custom-color-button:active{
+    box-shadow: none !important;
+}
+
+.custom-color-button-active{
+    outline: 3px solid #ff00005e !important;
 }
 
 .counter-input, .counter-input:focus{
@@ -39,4 +48,16 @@
 .no-spin {
     appearance: none;
     -moz-appearance:textfield !important;
+}
+
+.input-disable-style{
+    background-color: #ffffff00 !important;
+    border: none !important;
+    color: #212529 !important;
+    caret-color: transparent;
+    cursor: default;
+}
+
+.input-disable-style:focus{
+    box-shadow: none;
 }
