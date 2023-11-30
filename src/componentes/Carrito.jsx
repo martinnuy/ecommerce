@@ -135,7 +135,7 @@ function Carrito(props) {
                   <h5 className="text-grey resize-h5">$ {producto.precio_unitario * producto.cantidad}</h5>
                 </div>
                 <div className="col-1 col-md-1 align-items-center text-end pb-2">
-                  <Link className="red-hover-link" to="" onClick={() => eliminarProductoDelCarrito(producto.producto_id)}> <FaTrashCan /> </Link>
+                  <Link className="red-hover-link" to="" onClick={() => eliminarProductoDelCarrito(producto._id)}> <FaTrashCan /> </Link>
                 </div>
               </div>
             ))}

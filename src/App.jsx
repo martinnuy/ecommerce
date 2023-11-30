@@ -97,7 +97,7 @@ function App() {
             localStorage.getItem('token') != null ? (
               <Carrito titulo="CARRITO" categoria="carrito" infiniteTextValue={ infiniteTextValue }/>
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/login" replace/>
             )
            } />
 
@@ -105,7 +105,7 @@ function App() {
             localStorage.getItem('token') != null ? (
               <ProductGallery titulo="FAVORITOS" categoria="favoritos" infiniteTextValue={ infiniteTextValue } actualizarEnEntrar='true'/>
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/login" replace/>
             )
            } />
 

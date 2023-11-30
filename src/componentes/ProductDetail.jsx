@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import LoadSpinner from "./LoadSpinner";
 import "../hojas-de-estilos/ProductDetail.css";
@@ -72,44 +72,55 @@ const ProductDetail = (props) => {
 
     // Obtener el token del Local Storage
     const token = localStorage.getItem('token');
+    if(token){
 
-    // Crear un objeto FormData para enviar datos del formulario
-    const formData = new FormData();
-    formData.append('talle', size);
-    formData.append('color', color);
+        // Crear un objeto FormData para enviar datos del formulario
+      const formData = new FormData();
+      formData.append('talle', size);
+      formData.append('color', color);
 
 
-    try {
-      // Enviar la solicitud POST al servidor con el token en el encabezado
-      const response = await fetch( process.env.REACT_APP_API_URI + '/productos/carrito/' + product._id + '/' + quantity, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}` // Agregar el token al encabezado
+      try {
+        // Enviar la solicitud POST al servidor con el token en el encabezado
+        const response = await fetch( process.env.REACT_APP_API_URI + '/productos/carrito/' + product._id + '/' + quantity, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${token}` // Agregar el token al encabezado
+          }
+        });
+
+        if (response.ok) {
+          navigate('/cart');
+        } else {
+          const errorFromServer = await response.json();
+          throw new Error(errorFromServer.error);
         }
-      });
-
-      if (response.ok) {
-        navigate('/cart');
-      } else {
-        const errorFromServer = await response.json();
-        throw new Error(errorFromServer.error);
+    } catch (error) {
+        // Mostrar un mensaje de error
+        console.log(error);
       }
-  } catch (error) {
-      // Mostrar un mensaje de error
-      console.log(error);
-    }
+
+    }else{
+      navigate('/login');
+    } 
+    
 
   };
 
   const favoriteAddOrRemove = (metodo) =>{
-    fetch(process.env.REACT_APP_API_URI + `/productos/favoritos/${product._id.toString()}`, {
-      method: metodo,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json', // Puedes ajustar los encabezados según tus necesidades
-      }
-    })
+    
+    if(localStorage.getItem('token') !== null){
+      fetch(process.env.REACT_APP_API_URI + `/productos/favoritos/${product._id.toString()}`, {
+        method: metodo,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json', // Puedes ajustar los encabezados según tus necesidades
+        }
+      })
+    }else{
+      navigate('/login');
+    }   
   }
 
   //Se ejecuta al cargar todo el componente
@@ -124,7 +135,7 @@ const ProductDetail = (props) => {
       handleSizeChange(product.tallesDisponibles[0])
     }
 
-    if(product){
+    if(product && localStorage.getItem('token')){
       fetch(process.env.REACT_APP_API_URI + `/productos/favoritos/${product._id.toString()}`, {
         method: 'GET',
         headers: {
@@ -168,9 +179,11 @@ const ProductDetail = (props) => {
             <form className="col-lg-6" onSubmit={handleFormSubmit}>
               <h2 className="mb-4">
                 {product.nombre}
-                <Link className="red-hover-link px-3" onClick={toggleFavorite}>
+
+                <span className="red-hover-link px-3" onClick={toggleFavorite}>
                   {isFavorite ? <AiFillHeart onClick={()=> favoriteAddOrRemove('DELETE')} /> : <AiOutlineHeart onClick={()=> favoriteAddOrRemove('POST')} />}
-                </Link>
+                </span>
+
               </h2>
               <p className="lead mb-4">
               {product.descripcion}
