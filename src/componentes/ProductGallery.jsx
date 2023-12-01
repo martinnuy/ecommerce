@@ -4,9 +4,11 @@ import Footer from './Footer'
 import MostrarProductos from './MostrarProductos';
 import Subtitulo from './Subtitulo';
 import '../hojas-de-estilos/ProductGallery.css'
+import { useParams } from 'react-router-dom';
 
 function ProductGallery(props) {
-
+  const { busqueda } = useParams();
+  
   return (
     <div>
         <Nav />
@@ -16,7 +18,7 @@ function ProductGallery(props) {
           <Subtitulo titulo={props.titulo}/>
 
 
-          <MostrarProductos categoria={props.categoria} actualizarEnEntrar={props.actualizarEnEntrar} />
+          <MostrarProductos categoria={ busqueda ? ('search/' + busqueda) : props.categoria} actualizarEnEntrar={props.actualizarEnEntrar} />
 
 
         </div>

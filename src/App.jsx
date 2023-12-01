@@ -83,6 +83,7 @@ function App() {
           
           <Route path='/p/:slug' element={<ProductDetail infiniteTextValue={ infiniteTextValue } />} />
 
+          <Route path='/s/:busqueda' element={<ProductGallery titulo="RESULTADOS" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
 
 
           <Route path='/user' element={ 

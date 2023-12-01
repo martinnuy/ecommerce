@@ -69,6 +69,18 @@
   background-color: #212529;
 }
 
+.search-input, .search-input:focus-visible{
+  color: rgb(194, 194, 194);
+  background-color: #ffffff00;
+  width: 40vw;
+  border: none;
+  outline: none;
+}
+
+.search-input-container{
+  border-bottom: 1px solid rgb(194, 194, 194);
+}
+
 @media screen and (max-width: 991px) {
   #navbarSupportedContent {
     order: 2; /* Cambia el orden de div2 */

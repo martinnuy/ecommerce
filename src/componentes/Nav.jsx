@@ -11,11 +11,24 @@ function Nav(){
   const navigate = useNavigate();
 
   const toggleMenu = () => {
+    const searchBar = document.getElementById('collapseExample');
+
+    if(searchBar.classList.contains('show')){
+      searchBar.classList.remove('show');
+    }
+
     setIsMenuOpen(!isMenuOpen);
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleEnter = (event) => {
+    if (event.key === 'Enter' && document.getElementById('searchInput').value) {
+      // Lógica que deseas ejecutar al presionar Enter
+      navigate('/s/' + document.getElementById('searchInput').value);
+    }
   };
 
   const logoutFunction = () => {
@@ -64,7 +77,7 @@ return(
       
       <div className="col-sm-12 col-md-4 col-lg-3 py-0 px-5 me-5 text-end" id="icons-section">
         <div className="d-flex justify-content-end align-items-center">
-          <AiOutlineSearch className="nav-icons mx-2" />
+          <AiOutlineSearch className="nav-icons mx-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick={closeMenu}/>
           <Link to="/cart"> <AiOutlineShoppingCart className="nav-icons mx-2" /> </Link>
           <Link to="/favoritos"> <AiOutlineHeart className="nav-icons mx-2" /> </Link>
           
@@ -93,7 +106,12 @@ return(
         </div>
       </div>
 
-      
+
+    </div>
+    <div className="collapse mx-auto mb-3 search-input-container" id="collapseExample">
+
+        <AiOutlineSearch className="nav-icons mx-2" />
+        <input className="search-input mb-2" id='searchInput' type="text" placeholder="Buscar" onKeyPress={handleEnter} autoComplete="off"/>
 
     </div>
   </nav>
