@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../hojas-de-estilos/Carrito.css";
 import Footer from "./Footer";
 import Nav from "./Nav";
@@ -8,9 +8,13 @@ import LoadSpinner from "./LoadSpinner";
 import { Link } from "react-router-dom";
 import { FaTrashCan } from "react-icons/fa6";
 
+import { DataContext } from "../contexts/dataContext";
 
 function Carrito(props) {
     const queryClient = useQueryClient();
+
+    const {contextDataCart, setContextDataCart} = useContext(DataContext);
+    
 
     const { data: traerProductos, isLoading, isError } = useQuery(
         ['productos', props.categoria],
@@ -34,7 +38,7 @@ function Carrito(props) {
         }
       );
 
-      const eliminarProductoDelCarrito = async (productId) => {
+      const eliminarProductoDelCarrito = async (productId, cantidadAEliminar) => {
         try {
     
           const response = await fetch( process.env.REACT_APP_API_URI + `/productos/carrito/${productId}`, {
@@ -48,8 +52,12 @@ function Carrito(props) {
           if (response.ok) {
             // Después de la eliminación exitosa, actualiza manualmente la caché
             queryClient.invalidateQueries(['productos', props.categoria]);
+
+            if(contextDataCart - cantidadAEliminar >= 0){
+              setContextDataCart(contextDataCart - cantidadAEliminar)
+            }
             
-            console.log('Eliminación exitosa');
+            //console.log('Eliminación exitosa');
           } else {
             console.error('Error al intentar eliminar:', response.status);
           }
@@ -135,7 +143,7 @@ function Carrito(props) {
                   <h5 className="text-grey resize-h5">$ {producto.precio_unitario * producto.cantidad}</h5>
                 </div>
                 <div className="col-1 col-md-1 align-items-center text-end pb-2">
-                  <Link className="red-hover-link" to="" onClick={() => eliminarProductoDelCarrito(producto._id)}> <FaTrashCan /> </Link>
+                  <Link className="red-hover-link" to="" onClick={() => eliminarProductoDelCarrito(producto._id, producto.cantidad)}> <FaTrashCan /> </Link>
                 </div>
               </div>
             ))}

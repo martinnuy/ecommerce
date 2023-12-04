@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,15 +6,22 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import LoadSpinner from "./LoadSpinner";
 import "../hojas-de-estilos/ProductDetail.css";
 
+import { DataContext } from "../contexts/dataContext";
+
+
 const ProductDetail = (props) => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState('');
   const [color, setColor] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
+  const [actualizarNav, setActualizarNav] = useState(false);
 
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
+
+  const {contextDataCart, setContextDataCart} = useContext(DataContext);
+  const {contextDataFavoritos, setContextDataFavoritos} = useContext(DataContext);
 
   useEffect(() => {
     // Cargar datos desde la API
@@ -91,6 +98,7 @@ const ProductDetail = (props) => {
         });
 
         if (response.ok) {
+          setContextDataCart(contextDataCart + quantity);
           navigate('/cart');
         } else {
           const errorFromServer = await response.json();
@@ -108,16 +116,25 @@ const ProductDetail = (props) => {
 
   };
 
-  const favoriteAddOrRemove = (metodo) =>{
+  const favoriteAddOrRemove = async (metodo) =>{
     
     if(localStorage.getItem('token') !== null){
-      fetch(process.env.REACT_APP_API_URI + `/productos/favoritos/${product._id.toString()}`, {
+      await fetch(process.env.REACT_APP_API_URI + `/productos/favoritos/${product._id.toString()}`, {
         method: metodo,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json', // Puedes ajustar los encabezados según tus necesidades
         }
       })
+
+     if(metodo === 'POST'){
+      setContextDataFavoritos(contextDataFavoritos + 1);
+     }
+     if(metodo === 'DELETE'){
+      setContextDataFavoritos(contextDataFavoritos - 1);
+     } 
+
+      setActualizarNav(!actualizarNav);
     }else{
       navigate('/login');
     }   

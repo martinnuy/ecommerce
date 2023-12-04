@@ -18,6 +18,8 @@ import ProductDetail from './componentes/ProductDetail';
 import { useEffect } from 'react';
 import Carrito from './componentes/Carrito';
 
+import { DataContextProvider } from './contexts/dataContext';
+
 const queryClient = new QueryClient();
 
 
@@ -63,99 +65,101 @@ function App() {
 
   return (
     <div className="App">
-      <QueryClientProvider client={queryClient}>
+      <DataContextProvider>
+        <QueryClientProvider client={queryClient}>
 
-      <BrowserRouter>
-        <ScrollToTop />
-        
-        <Routes>
-          <Route path='/' element={<Home infiniteTextValue={infiniteTextValue} />} />
-          
-          <Route path='/ropa' element={<ProductGallery titulo="ROPA" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
-          <Route path='/calzado' element={<ProductGallery titulo="CALZADO" categoria="calzado" infiniteTextValue={ infiniteTextValue }/>} />
-          <Route path='/accesorios' element={<ProductGallery titulo="ACCESORIOS" categoria="accesorios" infiniteTextValue={ infiniteTextValue }/>} />
-          <Route path='/surf' element={<ProductGallery titulo="SURF" categoria="surf" infiniteTextValue={ infiniteTextValue }/>} />
+  <BrowserRouter>
+    <ScrollToTop />
+    
+    <Routes>
+      <Route path='/' element={<Home infiniteTextValue={infiniteTextValue} />} />
+      
+      <Route path='/ropa' element={<ProductGallery titulo="ROPA" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/calzado' element={<ProductGallery titulo="CALZADO" categoria="calzado" infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/accesorios' element={<ProductGallery titulo="ACCESORIOS" categoria="accesorios" infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/surf' element={<ProductGallery titulo="SURF" categoria="surf" infiniteTextValue={ infiniteTextValue }/>} />
 
-          <Route path='/nosotros' element={<AboutUsSection infiniteTextValue={ infiniteTextValue }/>} />
-          <Route path='/terminos' element={<TerminosSection infiniteTextValue={ infiniteTextValue }/>} />
-          <Route path='/preguntas' element={<PreguntasSection infiniteTextValue={ infiniteTextValue }/>} />
-          <Route path='/devoluciones' element={<DevolucionesSection infiniteTextValue={ infiniteTextValue }/>} />
-          
-          <Route path='/p/:slug' element={<ProductDetail infiniteTextValue={ infiniteTextValue } />} />
+      <Route path='/nosotros' element={<AboutUsSection infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/terminos' element={<TerminosSection infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/preguntas' element={<PreguntasSection infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/devoluciones' element={<DevolucionesSection infiniteTextValue={ infiniteTextValue }/>} />
+      
+      <Route path='/p/:slug' element={<ProductDetail infiniteTextValue={ infiniteTextValue } />} />
 
-          <Route path='/s/:busqueda' element={<ProductGallery titulo="RESULTADOS" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/s/:busqueda' element={<ProductGallery titulo="RESULTADOS" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
 
 
-          <Route path='/user' element={ 
-            localStorage.getItem('token') != null ? (
-              <ProductGallery titulo="Usuario" categoria="" infiniteTextValue={ infiniteTextValue }/>
+      <Route path='/user' element={ 
+        localStorage.getItem('token') != null ? (
+          <ProductGallery titulo="Usuario" categoria="" infiniteTextValue={ infiniteTextValue }/>
+        ) : (
+          <Navigate to="/login" />
+        )
+      } />
+
+      <Route path='/cart' element={ 
+        localStorage.getItem('token') != null ? (
+          <Carrito titulo="CARRITO" categoria="carrito" infiniteTextValue={ infiniteTextValue }/>
+        ) : (
+          <Navigate to="/login" replace/>
+        )
+      } />
+
+      <Route path='/favoritos' element={ 
+        localStorage.getItem('token') != null ? (
+          <ProductGallery titulo="FAVORITOS" categoria="favoritos" infiniteTextValue={ infiniteTextValue } actualizarEnEntrar='true'/>
+        ) : (
+          <Navigate to="/login" replace/>
+        )
+      } />
+
+
+      <Route 
+          path='/login' 
+          element={
+            localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
+              <Navigate to="/admin/panel" />
             ) : (
-              <Navigate to="/login" />
-            )
-           } />
-
-          <Route path='/cart' element={ 
-            localStorage.getItem('token') != null ? (
-              <Carrito titulo="CARRITO" categoria="carrito" infiniteTextValue={ infiniteTextValue }/>
-            ) : (
-              <Navigate to="/login" replace/>
-            )
-           } />
-
-          <Route path='/favoritos' element={ 
-            localStorage.getItem('token') != null ? (
-              <ProductGallery titulo="FAVORITOS" categoria="favoritos" infiniteTextValue={ infiniteTextValue } actualizarEnEntrar='true'/>
-            ) : (
-              <Navigate to="/login" replace/>
-            )
-           } />
-
-
-          <Route 
-              path='/login' 
-              element={
-                localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
-                  <Navigate to="/admin/panel" />
-                ) : (
-                  localStorage.getItem('token') == null ? (
-                    <AdminLogin />
-                  ) : (
-                    <Navigate to="/" />
-                  )
-                )
-              }
-            /> 
-
-          <Route 
-              path='/admin' 
-              element={
-                localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
-                  <Navigate to="/admin/panel" />
-                ) : (
-                  localStorage.getItem('token') == null ? (
-                    <AdminLogin />
-                  ) : (
-                    <Navigate to="/" />
-                  )
-                )
-              }
-            />
-
-          <Route 
-            path='/admin/panel' 
-            element={
-              localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
-                <AdminPanel/>
-              ) : ( 
-                <Navigate to="/" /> 
+              localStorage.getItem('token') == null ? (
+                <AdminLogin />
+              ) : (
+                <Navigate to="/" />
               )
-            }
-          />
+            )
+          }
+        /> 
 
-        </Routes>
+      <Route 
+          path='/admin' 
+          element={
+            localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
+              <Navigate to="/admin/panel" />
+            ) : (
+              localStorage.getItem('token') == null ? (
+                <AdminLogin />
+              ) : (
+                <Navigate to="/" />
+              )
+            )
+          }
+        />
 
-      </BrowserRouter>
-      </QueryClientProvider>
+      <Route 
+        path='/admin/panel' 
+        element={
+          localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
+            <AdminPanel/>
+          ) : ( 
+            <Navigate to="/" /> 
+          )
+        }
+      />
+
+    </Routes>
+
+  </BrowserRouter>
+  </QueryClientProvider>
+      </DataContextProvider>
     </div>
   );
 }

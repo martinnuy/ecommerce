@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import '../hojas-de-estilos/Nav.css';
 import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser, AiOutlineHeart  } from 'react-icons/ai';
 import { IoIosLogOut } from "react-icons/io";
@@ -6,8 +6,14 @@ import { CiShoppingTag } from "react-icons/ci";
 import {Link, useNavigate} from 'react-router-dom';
 import CachedImage from "./CachedImage";
 
-function Nav(){
+import { DataContext } from "../contexts/dataContext";
+
+function Nav(props){
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const {contextDataCart} = useContext(DataContext);
+  const {contextDataFavoritos} = useContext(DataContext);
+
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -27,6 +33,8 @@ function Nav(){
   const handleEnter = (event) => {
     if (event.key === 'Enter' && document.getElementById('searchInput').value) {
       // Lógica que deseas ejecutar al presionar Enter
+      const searchBar = document.getElementById('collapseExample');
+      searchBar.classList.remove('show');
       navigate('/s/' + document.getElementById('searchInput').value);
     }
   };
@@ -36,6 +44,7 @@ function Nav(){
     navigate('/');
     window.location.reload();
   };
+
 
 return(
   <nav className="navbar stroke navbar-expand-lg navbar-dark bg-dark fixed-top nav-wrap p-0 shadow-lg">
@@ -78,8 +87,16 @@ return(
       <div className="col-sm-12 col-md-4 col-lg-3 py-0 px-5 me-5 text-end" id="icons-section">
         <div className="d-flex justify-content-end align-items-center">
           <AiOutlineSearch className="nav-icons mx-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick={closeMenu}/>
-          <Link to="/cart"> <AiOutlineShoppingCart className="nav-icons mx-2" /> </Link>
-          <Link to="/favoritos"> <AiOutlineHeart className="nav-icons mx-2" /> </Link>
+          
+          <Link to="/cart" style={{textDecoration: 'none'}}> 
+            <AiOutlineShoppingCart className="nav-icons mx-2" /> 
+            {contextDataCart > 0 ? <span className='badge badge-warning lblCartCount'> {contextDataCart} </span> : null} 
+          </Link>
+          
+          <Link to="/favoritos" style={{textDecoration: 'none'}}> 
+            <AiOutlineHeart className="nav-icons mx-2" /> 
+            {contextDataFavoritos > 0 ? <span className='badge badge-warning lblCartCount'> {contextDataFavoritos} </span> : null} 
+          </Link>
           
           {
             (localStorage.getItem('token')) ? (
