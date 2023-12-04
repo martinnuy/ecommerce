@@ -55,11 +55,15 @@ export function DataContextProvider(props) {
       };
     
       useEffect(() => {
-        obtenerElementosCarrito();
+        if(localStorage.getItem('token')){
+            obtenerElementosCarrito();
+        }
       }, [contextDataCart]);
 
       useEffect(() => {
-        obtenerElementosFavoritos();
+        if(localStorage.getItem('token')){
+            obtenerElementosFavoritos();
+        }
       }, [contextDataFavoritos]);
 
   return (

@@ -3,6 +3,7 @@ import '../hojas-de-estilos/Nav.css';
 import '../hojas-de-estilos/AdminLogin.css'
 import { FaLock } from 'react-icons/fa';
 import NavSimple from './NavSimple';
+import { Link } from 'react-router-dom';
 
 function AdminLogin() {
 
@@ -80,8 +81,9 @@ function AdminLogin() {
                             required 
                         />
                     </div>
-                    <div><a className='link-dark-adm' href='/'>Recuperar Contraseña</a></div>
+                    <div><Link className='link-dark-adm' to='/'>Recuperar Contraseña.</Link></div>
                     <button type="submit" className="btn btn-danger my-3 boton-login-adm">Iniciar sesión</button>
+                    <div><Link className='link-dark-adm' to='/signup'>Crear una nueva cuenta.</Link></div>
                 </form>
 
                 <div style={{ color: messageColor }}>{message}</div>

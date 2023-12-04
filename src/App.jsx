@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import Carrito from './componentes/Carrito';
 
 import { DataContextProvider } from './contexts/dataContext';
+import Signup from './componentes/Signup';
 
 const queryClient = new QueryClient();
 
@@ -122,6 +123,21 @@ function App() {
             ) : (
               localStorage.getItem('token') == null ? (
                 <AdminLogin />
+              ) : (
+                <Navigate to="/" />
+              )
+            )
+          }
+        /> 
+
+      <Route 
+          path='/signup' 
+          element={
+            localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
+              <Navigate to="/admin/panel" />
+            ) : (
+              localStorage.getItem('token') == null ? (
+                <Signup />
               ) : (
                 <Navigate to="/" />
               )
