@@ -36,10 +36,11 @@ function AdminLogin() {
 
 
       } else {
-        throw new Error('Autenticación fallida');
+        const errorData = await response.json();
+        throw new Error(errorData.message);
       }
     } catch (error) {
-      setMessage('Correo o contraseña incorrectos.');
+      setMessage(error.message || 'Algo salio mal.');
       setMessageColor('red');
     }
   };

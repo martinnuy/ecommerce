@@ -20,6 +20,7 @@ import Carrito from './componentes/Carrito';
 
 import { DataContextProvider } from './contexts/dataContext';
 import Signup from './componentes/Signup';
+import ConfirmarEmail from './componentes/ConfirmarEmail';
 
 const queryClient = new QueryClient();
 
@@ -144,6 +145,21 @@ function App() {
             )
           }
         /> 
+
+        <Route 
+          path='/confirmacion/:token' 
+          element={
+            localStorage.getItem('token') != null && jwtDecode(localStorage.getItem('token')).role === 'admin' ? (
+              <Navigate to="/admin/panel" />
+            ) : (
+              localStorage.getItem('token') == null ? (
+                <ConfirmarEmail />
+              ) : (
+                <Navigate to="/" />
+              )
+            )
+          }
+        />
 
       <Route 
           path='/admin' 
