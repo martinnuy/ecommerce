@@ -45,6 +45,45 @@ function AdminLogin() {
     }
   };
 
+  const validarEmail = (email) => {
+    // Expresión regular para validar un formato de email básico
+    var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // Utiliza el método test() de la expresión regular para verificar el formato
+    return regex.test(email);
+  }
+
+  const recuperarContraseña = async () => {
+    if( validarEmail(email) ){
+
+      try {
+        const response = await fetch( process.env.REACT_APP_API_URI + '/auth/resetpassword', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+  
+        if (response.status === 200) {
+
+          setMessage('Se le ha enviado un correo para restablecer su contraseña.');
+          setMessageColor('green');
+  
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+        }
+      } catch (error) {
+        setMessage(error.message || 'Algo salio mal.');
+        setMessageColor('red');
+      }
+
+    }else{
+      setMessage('Debes ingresar un correo para restablecer su contraseña.');
+      setMessageColor('red');
+    }
+  }
   
 
   return (
@@ -53,7 +92,7 @@ function AdminLogin() {
         <NavSimple center='true' />
 
         <div className="container d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-            <div className="text-center p-5 shadow-lg login-div-adm">
+            <div className="text-center p-5 shadow-lg login-div-adm" style={{maxWidth: '303px'}}>
                 <FaLock size="3em" color="#e91e63" />
                 <h2 className='pt-3'>Iniciar sesión</h2>
 
@@ -82,12 +121,12 @@ function AdminLogin() {
                             required 
                         />
                     </div>
-                    <div><Link className='link-dark-adm' to='/'>Recuperar Contraseña.</Link></div>
+                    <div><Link className='link-dark-adm' to='' onClick={(e) => {e.preventDefault(); recuperarContraseña()}}>Recuperar Contraseña.</Link></div>
                     <button type="submit" className="btn btn-danger my-3 boton-login-adm">Iniciar sesión</button>
                     <div><Link className='link-dark-adm' to='/signup'>Crear una nueva cuenta.</Link></div>
                 </form>
 
-                <div style={{ color: messageColor }}>{message}</div>
+                <div className='mt-2' style={{ color: messageColor }}>{message}</div>
             </div>
         </div>
 
