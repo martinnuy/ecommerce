@@ -22,6 +22,7 @@ import { DataContextProvider } from './contexts/dataContext';
 import Signup from './componentes/Signup';
 import ConfirmarEmail from './componentes/ConfirmarEmail';
 import NuevaContraseña from './componentes/NuevaContraseña';
+import UserInfo from './componentes/UserInfo';
 
 const queryClient = new QueryClient();
 
@@ -94,7 +95,7 @@ function App() {
 
       <Route path='/user' element={ 
         localStorage.getItem('token') != null ? (
-          <ProductGallery titulo="Usuario" categoria="" infiniteTextValue={ infiniteTextValue }/>
+          <UserInfo titulo="Datos de Usuario" infiniteTextValue={ infiniteTextValue } />
         ) : (
           <Navigate to="/login" />
         )
@@ -156,7 +157,8 @@ function App() {
               localStorage.getItem('token') == null ? (
                 <ConfirmarEmail />
               ) : (
-                <Navigate to="/" />
+                <ConfirmarEmail />
+
               )
             )
           }

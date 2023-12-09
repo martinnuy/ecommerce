@@ -9,6 +9,7 @@ import LoadSpinner from './LoadSpinner';
 function ConfirmarEmail() {
     const { token } = useParams();
     const [confirmado, setConfirmado] = useState(false);
+    const [titulo, setTitulo] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const [message, setMessage] = useState('');
@@ -26,8 +27,13 @@ function ConfirmarEmail() {
               });
     
             if (response.status === 200) {
+                const respuesta = await response.json();
+                if(respuesta.titulo){
+                  setTitulo(respuesta.titulo);
+                  setMessage(respuesta.message);
+                }
                 setConfirmado(true);
-              setIsLoading(false);  
+                setIsLoading(false);  
             } else {
                 const errorData = await response.json();
                 throw new Error(errorData.message);
@@ -41,7 +47,7 @@ function ConfirmarEmail() {
         };
     
         confirmarCorreo();
-      }, [token]);
+      },);
     
   return (
     <div className='admBackground'>
@@ -56,10 +62,10 @@ function ConfirmarEmail() {
                             <div>
                                 <FaCheck size="3em" color="#e91e63"/>
 
-                                <h2 className='pt-3'>Su correo ha sido verificado</h2>
-                                <h5 className='mt-4'>¡Gracias por unirte a DripDrop!</h5>
+                                <h2 className='pt-3'>{ titulo ? titulo : 'Su correo ha sido verificado' }</h2>
+                                <h5 className='mt-4'>{ titulo ? message : '¡Gracias por unirte a DripDrop!' }</h5>
 
-                                <Link to="/login" className="btn btn-danger mt-3 boton-login-adm">Iniciar Sesion</Link>
+                                <Link to="/login" className={`btn btn-danger mt-3 boton-login-adm${titulo ? ' d-none' : ''}`}>Iniciar Sesion</Link>
                             </div>
                         ) : (
 
