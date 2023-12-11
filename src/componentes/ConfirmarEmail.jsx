@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import '../hojas-de-estilos/Nav.css';
 import '../hojas-de-estilos/AdminLogin.css'
 import { FaCheck, FaTimes  } from 'react-icons/fa';
 import NavSimple from './NavSimple';
 import { Link, useParams } from 'react-router-dom';
 import LoadSpinner from './LoadSpinner';
+import { useQuery } from 'react-query';
 
 function ConfirmarEmail() {
     const { token } = useParams();
@@ -15,40 +16,45 @@ function ConfirmarEmail() {
     const [message, setMessage] = useState('');
     const [messageColor, setMessageColor] = useState(''); 
 
-    useEffect(() => {
-        const confirmarCorreo = async () => {
-          try {
-            // Realizar una solicitud al servidor para confirmar el correo electrónico
-            const response = await fetch( process.env.REACT_APP_API_URI + '/auth/confirmaremail/' + token , {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              });
-    
-            if (response.status === 200) {
-                const respuesta = await response.json();
-                if(respuesta.titulo){
-                  setTitulo(respuesta.titulo);
-                  setMessage(respuesta.message);
-                }
-                setConfirmado(true);
-                setIsLoading(false);  
-            } else {
-                const errorData = await response.json();
-                throw new Error(errorData.message);
+    const confirmarCorreo = async () => {
+      try {
+        // Realizar una solicitud al servidor para confirmar el correo electrónico
+        const response = await fetch( process.env.REACT_APP_API_URI + '/auth/confirmaremail/' + token , {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+        if (response.status === 200) {
+            const respuesta = await response.json();
+            if(respuesta.titulo){
+              setTitulo(respuesta.titulo);
+              setMessage(respuesta.message);
             }
-          } catch (error) {
-            setIsLoading(false);
-            setMessage(error.message || 'Algo salio mal.');
-            setMessageColor('red');
-            // Manejar errores
-          }
-        };
-    
-        confirmarCorreo();
-      },);
-    
+            setConfirmado(true);
+            setIsLoading(false);  
+        } else {
+            const errorData = await response.json();
+            throw new Error(errorData.message);
+        }
+      } catch (error) {
+        setIsLoading(false);
+        setMessage(error.message || 'Algo salio mal.');
+        setMessageColor('red');
+        // Manejar errores
+      }
+    };
+
+  // Utiliza React Query
+    useQuery(
+    ['confirmarCorreo'],
+    () => confirmarCorreo(),
+    {
+      staleTime: 60000, // Establece el período de caché en 10 segundos
+    }
+  );
+      
   return (
     <div className='admBackground'>
         

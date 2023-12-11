@@ -10,15 +10,51 @@
 }
 
 
+.botones-cantidad{
+
+    padding: 4px !important;
+    width: 100%;
+    color: #212529;
+    background-color: #ffffff00;
+    border: none;
+    box-shadow: none;
+    vertical-align: 0 !important;
+}
+
+.botones-cantidad:focus{
+    box-shadow: none;
+}
+
+.botones-cantidad:focus{
+    background-color: #ffffff00;
+    color: #212529;
+}
+
+.botones-cantidad-hover:hover{
+    background-color: #e91e6269;
+    color: #212529;
+}
+
+
 
 @media screen and (max-width: 767px) {
     .resize-h5{
         font-size: 0.8rem;
+    }
+
+    .botones-cantidad{
+        padding: 0px !important;
     }
   }
 
   @media screen and (max-width: 280px) {
     .resize-h5{
         font-size: 0.5rem;
+    }
+  }
+
+  @media screen and (min-width: 767px) and (max-width: 1025px) {
+    .resize-button-div{
+        width: 100%;
     }
   }

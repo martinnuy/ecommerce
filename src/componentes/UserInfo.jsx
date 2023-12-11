@@ -49,7 +49,10 @@ function UserInfo(props) {
           setLastName('');
           setReloadData(!reloadData);
         } else {
-          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+          const errorData = await response.json();
+          setMessage(errorData.message);
+          setMessageColor("red");
+          throw new Error(errorData.message);
         }
       } catch (error) {
         console.error("Error al realizar la solicitud:", error);

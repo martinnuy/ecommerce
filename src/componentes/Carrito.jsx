@@ -5,18 +5,22 @@ import Nav from "./Nav";
 import Subtitulo from "./Subtitulo";
 import { useQuery, useQueryClient } from "react-query";
 import LoadSpinner from "./LoadSpinner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTrashCan } from "react-icons/fa6";
 
 import { DataContext } from "../contexts/dataContext";
+import { BsCartXFill } from "react-icons/bs";
+
 
 function Carrito(props) {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
 
     const {contextDataCart, setContextDataCart} = useContext(DataContext);
     
 
-    const { data: traerProductos, isLoading, isError } = useQuery(
+    const { data: traerProductos, isLoading, isError, refetch  } = useQuery(
         ['productos', props.categoria],
         async () => {
           const token = localStorage.getItem('token');
@@ -65,6 +69,65 @@ function Carrito(props) {
           console.error('Error en la solicitud de eliminación:', error);
         }
       };
+
+
+      const sumaOResta = (id, operacion) =>{
+        const inputContador = document.getElementById(id);
+
+
+          if(operacion === 1){
+            inputContador.value = parseInt(inputContador.value) + 1;
+          }
+          if(operacion === -1 && parseInt(inputContador.value) > 1){
+            inputContador.value = parseInt(inputContador.value) - 1;
+          }
+        
+      }
+
+
+      const agregarOQuitarCarrito = async (id, slug, quantity, size, color) => {
+    
+        // Obtener el token del Local Storage
+        const token = localStorage.getItem('token');
+        if(token){
+    
+            // Crear un objeto FormData para enviar datos del formulario
+          const formData = new FormData();
+          formData.append('talle', size);
+          formData.append('color', color);
+    
+    
+          try {
+            // Enviar la solicitud POST al servidor con el token en el encabezado
+            const response = await fetch( process.env.REACT_APP_API_URI + '/productos/carrito/' + id + '/' + quantity, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                Authorization: `Bearer ${token}` // Agregar el token al encabezado
+              }
+            });
+    
+            if (response.ok) {
+              refetch(); 
+              sumaOResta('quantity-' + slug, quantity);
+              setContextDataCart(contextDataCart + quantity);
+            } else {
+              const errorFromServer = await response.json();
+              throw new Error(errorFromServer.error);
+            }
+        } catch (error) {
+            // Mostrar un mensaje de error
+            console.log(error);
+          }
+    
+        }else{
+          navigate('/login');
+        } 
+        
+    
+      };
+
+
     
       //Spinner
       if (isLoading) {
@@ -78,12 +141,25 @@ function Carrito(props) {
         return <div>Error al obtener los datos</div>;
       }
 
+
   return (
     <div className="div-contenedor-productos">
       <Nav />
 
       <Subtitulo titulo={props.titulo} />
 
+      {
+      (traerProductos.productosCarrito.length === 0) ? (
+
+        <div className="container mt-5 void-section rounded">
+          <div className="text-center">
+          <BsCartXFill size={100} />
+            <p className="mt-3 fs-5">Aún no tienes productos en tu Carrito...</p>
+            <p className='fs-5 text-secondary'>¡Empieza un carrito de compras!</p>
+          </div>
+        </div>
+
+      ):(
       <div className="container mt-3 mb-5">
         <div className="d-flex justify-content-center row">
           <div className="col-md-8">
@@ -136,8 +212,51 @@ function Carrito(props) {
                     </div>
                   </div>
                 </div>
-                <div className="align-items-center text-center qty col-3 col-md-3">
-                    <h5 className="text-grey mt-1 mr-1 ml-1 px-1 resize-h5">{producto.cantidad}</h5>
+                <div className="row align-items-center text-center qty col-3 col-md-3 justify-content-center p-2">
+
+                  <div className="col-md-6 rounded-pill d-inline-block p-0 resize-button-div" style={{ alignItems: 'center', backgroundColor: '#e2e2e2' }}>
+                    
+                    
+                    <div className="col-4 d-inline-block" >
+                      <button
+                        type="button"
+                        className="btn btn-danger rounded-pill d-inline botones-cantidad botones-cantidad-hover"
+                        onClick={()=>agregarOQuitarCarrito(producto.producto_id, producto.slug, -1, producto.talle, producto.color)}
+                      >
+                        -
+                      </button>
+                    </div>
+                    
+                    <div className="col-4 d-inline-block" >
+                      <input
+                        type="number"
+                        id={`quantity-${producto.slug}`}
+                        className="form-control text-center d-inline no-spin botones-cantidad"
+                        value={producto.cantidad}
+                        //onChange={handleQuantityChange}
+                        min="1"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="col-4 d-inline-block" >
+                      <button
+                        type="button"
+                        className="btn btn-danger rounded-pill d-inline botones-cantidad botones-cantidad-hover"
+                        onClick={()=>agregarOQuitarCarrito(producto.producto_id, producto.slug, 1, producto.talle, producto.color)}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <div className="d-inline counter-input-div">
+                      
+                    </div>
+                    
+                    
+                    
+                  </div>
+
                 </div>
                 <div className="col-2 col-md-2 text-end">
                   <h5 className="text-grey resize-h5">$ {producto.precio_unitario * producto.cantidad}</h5>
@@ -175,7 +294,7 @@ function Carrito(props) {
             </div>
           </div>
         </div>
-      </div>
+      </div>)}
 
       <Footer infiniteTextValue={props.infiniteTextValue} />
     </div>
