@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../hojas-de-estilos/Carrito.css";
 import Footer from "./Footer";
 import Nav from "./Nav";
@@ -14,6 +14,9 @@ import { BsCartXFill } from "react-icons/bs";
 
 function Carrito(props) {
     const queryClient = useQueryClient();
+    const [codigoDeDescuento, setCodigoDeDescuento] = useState('');
+    const [message, setMessage] = useState('');
+    const [messageColor, setMessageColor] = useState('');
     const navigate = useNavigate();
 
 
@@ -35,6 +38,7 @@ function Carrito(props) {
             throw new Error('Error al obtener los datos');
           }
           const data = await response.json();
+          setCodigoDeDescuento(data.codigoDeDescuento.codigo);
           return data;
         },
         {
@@ -71,25 +75,12 @@ function Carrito(props) {
       };
 
 
-      const sumaOResta = (id, operacion) =>{
-        const inputContador = document.getElementById(id);
 
-
-          if(operacion === 1){
-            inputContador.value = parseInt(inputContador.value) + 1;
-          }
-          if(operacion === -1 && parseInt(inputContador.value) > 1){
-            inputContador.value = parseInt(inputContador.value) - 1;
-          }
-        
-      }
-
-
-      const agregarOQuitarCarrito = async (id, slug, quantity, size, color) => {
+      const agregarOQuitarCarrito = async (id, slug, quantity, size, color, _id) => {
     
         // Obtener el token del Local Storage
         const token = localStorage.getItem('token');
-        if(token){
+        if(token && (parseInt(document.getElementById('quantity-'+_id).value) + quantity) > 0){
     
             // Crear un objeto FormData para enviar datos del formulario
           const formData = new FormData();
@@ -107,12 +98,25 @@ function Carrito(props) {
               }
             });
     
+            const plusButton = document.getElementById('plusButton-' + _id);
+            
             if (response.ok) {
               refetch(); 
-              sumaOResta('quantity-' + slug, quantity);
               setContextDataCart(contextDataCart + quantity);
+              if(plusButton){plusButton.removeAttribute('disabled');}
             } else {
               const errorFromServer = await response.json();
+              const errorDiv = document.getElementById('error-' + _id);
+              errorDiv.innerHTML = errorFromServer.error;
+
+              if(response.status === 400 && plusButton){
+                plusButton.setAttribute('disabled', '');
+              }
+
+              setTimeout(() => {
+                if(errorDiv){errorDiv.innerHTML = '';}
+              }, 10000);
+
               throw new Error(errorFromServer.error);
             }
         } catch (error) {
@@ -121,7 +125,56 @@ function Carrito(props) {
           }
     
         }else{
-          navigate('/login');
+          if(!token){
+            navigate('/login');
+          }
+        } 
+        
+    
+      };
+
+
+      const aplicarCodigoDeDescuento = async (id, slug, quantity, size, color, _id) => {
+    
+        // Obtener el token del Local Storage
+        const token = localStorage.getItem('token');
+        if(token){
+    
+            // Crear un objeto FormData para enviar datos del formulario
+          const formData = new FormData();
+          formData.append('codigo', codigoDeDescuento);
+  
+          try {
+            // Enviar la solicitud POST al servidor con el token en el encabezado
+            const response = await fetch( process.env.REACT_APP_API_URI + '/productos/codigodescuento/carrito', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                Authorization: `Bearer ${token}` // Agregar el token al encabezado
+              }
+            });
+             
+            if (response.ok) {
+              const serverMessage = await response.json();
+              refetch(); 
+              setMessage(serverMessage.message);
+              setMessageColor('green');
+            } else {
+              const errorFromServer = await response.json();
+              setMessage(errorFromServer.message);
+              setMessageColor('red');
+
+              throw new Error(errorFromServer.message);
+            }
+          } catch (error) {
+            // Mostrar un mensaje de error
+            console.log(error);
+          }
+    
+        }else{
+          if(!token){
+            navigate('/login');
+          }
         } 
         
     
@@ -176,94 +229,98 @@ function Carrito(props) {
 
             {/* Productos del carrito */}
             {traerProductos.productosCarrito.map((producto, index) => (
-              <div
-                key={index}
-                className="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded"
-              >
-                <div className="mr-1 col-3 col-md-2">
-                  <Link to={'../p/' + producto.slug}>
-                    <img
-                        className="rounded"
-                        src={producto.img}
-                        width="70"
-                        alt={`Product ${index + 1}`}
-                    />
-                  </Link>
-                </div>
-                <div className="d-flex flex-column align-items-center product-details col-3 col-md-4">
-                  <Link className="red-hover-link" to={'../p/' + producto.slug}><h5 className="font-weight-bold resize-h5">{producto.nombre}</h5></Link>
-                  <div className="row product-desc">
-                    <div className="size mr-1 col-md-12 text-center p-0">
-                      { (producto.talle !== '') ? (
-                          <span className="text-grey px-1 resize-h5">Talle: <span className="fw-bold resize-h5">{producto.talle}</span> </span>
-                        ):(
-                          <span></span>
-                        )
-                      }
-                    </div>
-                    <div className="color col-md-12 text-center p-0">
-                      { (producto.color !== '') ? (
-                            <span className="text-grey px-1 resize-h5"> Color: <span className="fw-bold resize-h5">{producto.color}</span> </span>
+              <div key={index}>
+                  <div
+                  className="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded"
+                >
+                  <div className="mr-1 col-3 col-md-2">
+                    <Link to={'../p/' + producto.slug}>
+                      <img
+                          className="rounded"
+                          src={producto.img}
+                          width="70"
+                          alt={`Product ${index + 1}`}
+                      />
+                    </Link>
+                  </div>
+                  <div className="d-flex flex-column align-items-center product-details col-3 col-md-4">
+                    <Link className="red-hover-link" to={'../p/' + producto.slug}><h5 className="font-weight-bold resize-h5">{producto.nombre}</h5></Link>
+                    <div className="row product-desc">
+                      <div className="size mr-1 col-md-12 text-center p-0">
+                        { (producto.talle !== '') ? (
+                            <span className="text-grey px-1 resize-h5">Talle: <span className="fw-bold resize-h5">{producto.talle}</span> </span>
                           ):(
                             <span></span>
                           )
                         }
-                      
+                      </div>
+                      <div className="color col-md-12 text-center p-0">
+                        { (producto.color !== '') ? (
+                              <span className="text-grey px-1 resize-h5"> Color: <span className="fw-bold resize-h5">{producto.color}</span> </span>
+                            ):(
+                              <span></span>
+                            )
+                          }
+                        
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="row align-items-center text-center qty col-3 col-md-3 justify-content-center p-2">
+                  <div className="row align-items-center text-center qty col-3 col-md-3 justify-content-center p-2">
 
-                  <div className="col-md-6 rounded-pill d-inline-block p-0 resize-button-div" style={{ alignItems: 'center', backgroundColor: '#e2e2e2' }}>
-                    
-                    
-                    <div className="col-4 d-inline-block" >
-                      <button
-                        type="button"
-                        className="btn btn-danger rounded-pill d-inline botones-cantidad botones-cantidad-hover"
-                        onClick={()=>agregarOQuitarCarrito(producto.producto_id, producto.slug, -1, producto.talle, producto.color)}
-                      >
-                        -
-                      </button>
-                    </div>
-                    
-                    <div className="col-4 d-inline-block" >
-                      <input
-                        type="number"
-                        id={`quantity-${producto.slug}`}
-                        className="form-control text-center d-inline no-spin botones-cantidad"
-                        value={producto.cantidad}
-                        //onChange={handleQuantityChange}
-                        min="1"
-                        required
-                      />
-                    </div>
-                    
-                    <div className="col-4 d-inline-block" >
-                      <button
-                        type="button"
-                        className="btn btn-danger rounded-pill d-inline botones-cantidad botones-cantidad-hover"
-                        onClick={()=>agregarOQuitarCarrito(producto.producto_id, producto.slug, 1, producto.talle, producto.color)}
-                      >
-                        +
-                      </button>
-                    </div>
+                    <div className="col-md-6 rounded-pill d-inline-block p-0 resize-button-div" style={{ alignItems: 'center', backgroundColor: '#e2e2e2' }}>
+                      
+                      
+                      <div className="col-4 d-inline-block" >
+                        <button
+                          type="button"
+                          className="btn btn-danger rounded-pill d-inline botones-cantidad botones-cantidad-hover"
+                          onClick={()=>agregarOQuitarCarrito(producto.producto_id, producto.slug, -1, producto.talle, producto.color, producto._id)}
+                        >
+                          -
+                        </button>
+                      </div>
+                      
+                      <div className="col-4 d-inline-block" >
+                        <input
+                          type="number"
+                          id={`quantity-${producto._id}`}
+                          className="form-control text-center d-inline no-spin botones-cantidad"
+                          value={producto.cantidad}
+                          min="1"
+                          readOnly
+                          required
+                        />
+                      </div>
+                      
+                      <div className="col-4 d-inline-block" >
+                        <button
+                          type="button"
+                          className="btn btn-danger rounded-pill d-inline botones-cantidad botones-cantidad-hover"
+                          onClick={()=>agregarOQuitarCarrito(producto.producto_id, producto.slug, 1, producto.talle, producto.color, producto._id)}
+                          id={`plusButton-${producto._id}`}
+                        >
+                          +
+                        </button>
+                      </div>
 
-                    <div className="d-inline counter-input-div">
+                      <div className="d-inline counter-input-div">
+                        
+                      </div>
+                      
+                      
                       
                     </div>
-                    
-                    
-                    
+
+                  </div>
+                  <div className="col-2 col-md-2 text-end">
+                    <h5 className="text-grey resize-h5">$ {producto.precio_unitario * producto.cantidad}</h5>
+                  </div>
+                  <div className="col-1 col-md-1 align-items-center text-end pb-2">
+                    <Link className="red-hover-link" to="" onClick={() => eliminarProductoDelCarrito(producto._id, producto.cantidad)}> <FaTrashCan /> </Link>
                   </div>
 
                 </div>
-                <div className="col-2 col-md-2 text-end">
-                  <h5 className="text-grey resize-h5">$ {producto.precio_unitario * producto.cantidad}</h5>
-                </div>
-                <div className="col-1 col-md-1 align-items-center text-end pb-2">
-                  <Link className="red-hover-link" to="" onClick={() => eliminarProductoDelCarrito(producto._id, producto.cantidad)}> <FaTrashCan /> </Link>
-                </div>
+                  <div className='mt-2 col-md-12 text-center' style={{ color: 'red' }} id={`error-${producto._id}`} ></div>
               </div>
             ))}
 
@@ -277,14 +334,20 @@ function Carrito(props) {
                 type="text"
                 className="form-control border gift-card mx-2"
                 placeholder="Código de descuento"
+                value={codigoDeDescuento}
+                onChange={(e) => setCodigoDeDescuento(e.target.value)}
               />
               <button
                 className="btn btn-outline-danger btn-m ml-2"
                 type="button"
+                onClick={aplicarCodigoDeDescuento}
               >
                 Aplicar
               </button>
+
             </div>
+            
+            <div className='mt-2 col-md-12 text-center' style={{ color: messageColor }} >{message}</div>
 
             {/* Botón de pagar */}
             <div className="text-center mt-3 p-2 bg-white rounded">

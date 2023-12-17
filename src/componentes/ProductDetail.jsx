@@ -16,6 +16,10 @@ const ProductDetail = (props) => {
   const [color, setColor] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
   const [actualizarNav, setActualizarNav] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messageColor, setMessageColor] = useState(''); 
+  const [stock, setStock] = useState('');
+
 
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
@@ -27,7 +31,12 @@ const ProductDetail = (props) => {
     // Cargar datos desde la API
     fetch(process.env.REACT_APP_API_URI + `/productos/slug/${slug}`)
       .then((response) => response.json())
-      .then((data) => setProduct(data))
+      .then((data) => {
+        setProduct(data);
+        if(data.tallesDisponibles.length === 1){ 
+          setStock(data.tallesDisponibles[0].stock); 
+        }
+      })
       .catch((error) => console.error("Error fetching product details", error));
   }, [slug]);
 
@@ -36,8 +45,15 @@ const ProductDetail = (props) => {
   };
 
   const sumarORestar = (number) => {
-    if((quantity + number) > 0){
+    if((quantity + number) > 0 && (quantity + number) <= stock){
       setQuantity(quantity + number);
+    }
+    if(!size && product.tallesDisponibles.length !== 1){
+      setMessage('Seleccione un talle.')
+      setMessageColor('red');
+      setTimeout(() => {
+        setMessage('');
+      }, 5000);
     }
   }
 
@@ -49,6 +65,8 @@ const ProductDetail = (props) => {
         boton.classList.remove('active');
       }else{
         boton.classList.add('active');
+        setStock(boton.getAttribute('data-stock'));
+        setQuantity(1);
       }
     }
     //Cambia el valor del talle para ser enviado a la bd
@@ -102,6 +120,11 @@ const ProductDetail = (props) => {
           navigate('/cart');
         } else {
           const errorFromServer = await response.json();
+          setMessage(errorFromServer.error);
+          setMessageColor('red');
+          setTimeout(() => {
+            setMessage('');
+          }, 5000);
           throw new Error(errorFromServer.error);
         }
     } catch (error) {
@@ -149,7 +172,7 @@ const ProductDetail = (props) => {
     
     //Si solo existe un talle disponible lo selecciona automaticamente.
     if (product && product.tallesDisponibles.length === 1) {
-      handleSizeChange(product.tallesDisponibles[0])
+      handleSizeChange(product.tallesDisponibles[0].talle)
     }
 
     if(product && localStorage.getItem('token')){
@@ -213,11 +236,9 @@ const ProductDetail = (props) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                 </h4>
               </div>
+
               <div className="mb-4">
-                <span className="text-muted">Disponibilidad:</span> En stock
-              </div>
-              <div className="mb-4">
-                <label htmlFor="quantity" className="form-label d-block">
+                <label htmlFor="quantity" className="form-label d-block mb-4">
                   Cantidad:
                 </label>
 
@@ -237,6 +258,7 @@ const ProductDetail = (props) => {
                       value={quantity}
                       onChange={handleQuantityChange}
                       min="1"
+                      readOnly
                       required
                     />
                   </div>
@@ -251,9 +273,10 @@ const ProductDetail = (props) => {
               </div>
               <div className="mb-4">
                 
+              <div className='my-2' style={{ color: messageColor }}>{message}</div>
 
                     {
-                      (product.tallesDisponibles.length !== 0) ? (
+                      (product.tallesDisponibles.filter(producto => producto.talle !== "").length !== 0) ? (
                         <p className='form-label'>
                           Talle: <input 
                                     className="d-inline form-control input-disable-style p-0" 
@@ -274,19 +297,30 @@ const ProductDetail = (props) => {
 
                 <div id="div-talles">
                 {//Se listan los talles disponibles del producto
-                  product.tallesDisponibles.map((talle, index) =>{
-                    return(
-                      <button
-                        type="button"
-                        className="btn p-0 btn-outline-dark m-2 custom-color-button"
-                        key={index}
-                        onClick={() => handleSizeChange(talle)}
-                      >
-                        {talle}
-                      </button>
-                    )
-                  })
+                  (product.tallesDisponibles.filter(producto => producto.talle !== "").length !== 0) ? (
+
+                    product.tallesDisponibles.map((talle, index) =>{
+                      return(
+                          <button
+                            type="button"
+                            className="btn p-0 btn-outline-dark m-2 custom-color-button"
+                            key={index}
+                            onClick={() => handleSizeChange(talle.talle)}
+                            data-stock={talle.stock}
+                          >
+                            {talle.talle}
+                          </button>
+                          
+                      )
+                    })
+                  ) : (
+                    null
+                  )
                 }
+                </div>
+
+                <div className="mb-3 mt-3">
+                  <span className="">Stock:</span> {stock}
                 </div>
 
               </div>
