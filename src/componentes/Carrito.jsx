@@ -204,7 +204,7 @@ function Carrito(props) {
       {
       (traerProductos.productosCarrito.length === 0) ? (
 
-        <div className="container mt-5 void-section rounded">
+        <div className="container mt-5 div-envios rounded">
           <div className="text-center">
           <BsCartXFill size={100} />
             <p className="mt-3 fs-5">Aún no tienes productos en tu Carrito...</p>
@@ -351,8 +351,12 @@ function Carrito(props) {
 
             {/* Botón de pagar */}
             <div className="text-center mt-3 p-2 bg-white rounded">
-              <button className="btn btn-danger boton-login-adm" type="button">
-                Continuar con el Pago
+              <button 
+                className="btn btn-danger boton-login-adm" 
+                type="button" 
+                onClick={() =>{ navigate('/envio') }}
+              >
+                Continuar
               </button>
             </div>
           </div>

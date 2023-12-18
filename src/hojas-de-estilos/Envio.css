@@ -1,0 +1,20 @@
+.boton-envio{
+    transition: background-color .5s;
+    cursor: pointer;
+}
+
+.boton-envio:hover{
+    background-color: #e91e62a9;
+    transition: background-color .5s;
+}
+
+.boton-envio-active{
+    background-color: #e91e62bb;
+    transition: background-color .5s;
+}
+
+.div-envios{
+    display: flex;
+    background-color: #e5e5e5;
+    min-height: 50vh;
+}

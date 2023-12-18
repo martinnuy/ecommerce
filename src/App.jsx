@@ -23,6 +23,7 @@ import Signup from './componentes/Signup';
 import ConfirmarEmail from './componentes/ConfirmarEmail';
 import NuevaContraseña from './componentes/NuevaContraseña';
 import UserInfo from './componentes/UserInfo';
+import Envio from './componentes/Envio';
 
 const queryClient = new QueryClient();
 
@@ -104,6 +105,14 @@ function App() {
       <Route path='/cart' element={ 
         localStorage.getItem('token') != null ? (
           <Carrito titulo="CARRITO" categoria="carrito" infiniteTextValue={ infiniteTextValue }/>
+        ) : (
+          <Navigate to="/login" replace/>
+        )
+      } />
+
+      <Route path='/envio' element={ 
+        localStorage.getItem('token') != null ? (
+          <Envio titulo="¿Cómo quieres recibir o retirar tu compra?" categoria="envio" infiniteTextValue={ infiniteTextValue }/>
         ) : (
           <Navigate to="/login" replace/>
         )
