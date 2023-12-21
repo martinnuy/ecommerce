@@ -24,6 +24,7 @@ import ConfirmarEmail from './componentes/ConfirmarEmail';
 import NuevaContraseña from './componentes/NuevaContraseña';
 import UserInfo from './componentes/UserInfo';
 import Envio from './componentes/Envio';
+import Pagar from './componentes/Pagar';
 
 const queryClient = new QueryClient();
 
@@ -111,8 +112,16 @@ function App() {
       } />
 
       <Route path='/envio' element={ 
-        localStorage.getItem('token') != null ? (
+        (localStorage.getItem('token') != null) ? (
           <Envio titulo="¿Cómo quieres recibir o retirar tu compra?" categoria="envio" infiniteTextValue={ infiniteTextValue }/>
+        ) : (
+          <Navigate to="/login" replace/>
+        )
+      } />
+
+      <Route path='/pagar' element={ 
+        (localStorage.getItem('token') != null) ? (
+          <Pagar titulo="Elegir medio de pago" categoria="pagar" infiniteTextValue={ infiniteTextValue }/>
         ) : (
           <Navigate to="/login" replace/>
         )

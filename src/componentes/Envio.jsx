@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Footer from "./Footer";
 import Nav from "./Nav";
 import Subtitulo from "./Subtitulo";
@@ -8,6 +8,8 @@ import "../hojas-de-estilos/Envio.css";
 
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
+import { DataContext } from "../contexts/dataContext";
+
 
 function Envio(props) {
   const [envioADomicilio, setEnvioADomicilio] = useState(true);
@@ -18,6 +20,7 @@ function Envio(props) {
   const [nombreDelDestinatario, setNombreDelDestinatario] = useState("");
   const [comentariosAdicionales, setComentariosAdicionales] = useState("");
 
+  const { contextDataCart } = useContext(DataContext);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
@@ -57,6 +60,11 @@ function Envio(props) {
     }
   };
 
+  useEffect(() => {
+    if(contextDataCart === 0){
+      navigate('/');
+    }
+  }, [contextDataCart, navigate]);
 
   return (
     <div>

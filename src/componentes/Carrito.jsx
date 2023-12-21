@@ -204,7 +204,7 @@ function Carrito(props) {
       {
       (traerProductos.productosCarrito.length === 0) ? (
 
-        <div className="container mt-5 div-envios rounded">
+        <div className="container mt-5 void-section rounded">
           <div className="text-center">
           <BsCartXFill size={100} />
             <p className="mt-3 fs-5">Aún no tienes productos en tu Carrito...</p>

@@ -1,0 +1,4 @@
+.boton-metodo-pago-active{
+    outline: 3px solid #e91e6340;
+    transition: outline 0.1s;
+}
