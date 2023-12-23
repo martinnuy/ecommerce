@@ -25,6 +25,7 @@ import NuevaContraseña from './componentes/NuevaContraseña';
 import UserInfo from './componentes/UserInfo';
 import Envio from './componentes/Envio';
 import Pagar from './componentes/Pagar';
+import ComprasHistorial from './componentes/ComprasHistorial';
 
 const queryClient = new QueryClient();
 
@@ -98,6 +99,14 @@ function App() {
       <Route path='/user' element={ 
         localStorage.getItem('token') != null ? (
           <UserInfo titulo="Datos de Usuario" infiniteTextValue={ infiniteTextValue } />
+        ) : (
+          <Navigate to="/login" />
+        )
+      } />
+
+      <Route path='/compras' element={ 
+        localStorage.getItem('token') != null ? (
+          <ComprasHistorial titulo="Historial de compras" infiniteTextValue={ infiniteTextValue } />
         ) : (
           <Navigate to="/login" />
         )

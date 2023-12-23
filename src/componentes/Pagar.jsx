@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Nav from './Nav';
 import Subtitulo from './Subtitulo';
 import Footer from './Footer';
 import '../hojas-de-estilos/Pagar.css';
 import { useNavigate } from 'react-router-dom';
+import { DataContext } from "../contexts/dataContext";
+
 
 function Pagar(props) {
   const [metodoDePago, setMetodoDePago] = useState('');
   const [message, setMessage] = useState('');
+  const { contextDataCart } = useContext(DataContext);
   const navigate = useNavigate();
 
 
   const funcionPagar = async (e) => {
     e.preventDefault();
 
-    if (metodoDePago) {
+    if (metodoDePago && contextDataCart > 0) {
       try {
         const response = await fetch(
           process.env.REACT_APP_API_URI + "/pagos/"+ metodoDePago +"/create-order",
@@ -42,6 +45,12 @@ function Pagar(props) {
       }
     }
   };
+
+  useEffect(() => {
+    if(contextDataCart === 0){
+      navigate('/');
+    }
+  }, [contextDataCart, navigate]);
 
   return (
     <div>

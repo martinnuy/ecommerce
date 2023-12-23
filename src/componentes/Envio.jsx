@@ -32,7 +32,7 @@ function Envio(props) {
   const datosDeEnvio = async (e) => {
     e.preventDefault();
 
-    if (true) {
+    if (contextDataCart > 0) {
       try {
         const response = await fetch(
           process.env.REACT_APP_API_URI + "/users/datosenvio",

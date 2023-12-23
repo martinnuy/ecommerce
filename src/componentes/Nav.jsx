@@ -106,7 +106,7 @@ return(
 
                 <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-custom dropdown-menu-end">
                   <li><Link className="dropdown-item py-3" to="/user"> <AiOutlineUser className="nav-icons me-2 dropdown-toggle" />Mis Datos</Link></li>
-                  <li><Link className="dropdown-item py-3" to=""> <CiShoppingTag className="nav-icons me-2" />Compras</Link></li>
+                  <li><Link className="dropdown-item py-3" to="/compras"> <CiShoppingTag className="nav-icons me-2" />Compras</Link></li>
                   <li><Link className="dropdown-item py-3" to="" onClick={logoutFunction}> <IoIosLogOut className="nav-icons me-2" />Cerrar Sesion</Link></li>
                 </ul>
               </div>
