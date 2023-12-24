@@ -6,16 +6,16 @@ import Subtitulo from './Subtitulo';
 import { FaHistory } from "react-icons/fa";
 import LoadSpinner from './LoadSpinner';
 import { Link } from 'react-router-dom';
-import { FaTrashCan } from 'react-icons/fa6';
+import { useEffect } from 'react';
 
 
-function ComprasHistorial(props ) {
+function ComprasHistorial( props ) {
 
 const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
     ['productos', props.categoria],
     async () => {
         const token = localStorage.getItem('token');
-        const response = await fetch( process.env.REACT_APP_API_URI + `/users/historialcompras`,{
+        const response = await fetch( process.env.REACT_APP_API_URI + `/users/historialcompras/` + props.isAdmin,{
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -34,6 +34,20 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
     }
     );
 
+    //Cambia el titulo de la pagina.
+    useEffect(() => {
+      document.title = 'Mis Compras - DripDrop';
+      // Puedes limpiar el título cuando el componente se desmonta
+      return () => {
+        document.title = 'DripDrop';
+      };
+    }, [])
+    
+
+    useEffect(() => {
+      refetch();
+    }, [props.isAdmin, refetch])
+    
 
       //Spinner
     if (isLoading) {
@@ -49,7 +63,7 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
 
   return (
     <div>
-    <Nav />
+    { props.isAdmin ? (null) : <Nav /> }
 
     <div className='div-contenedor-productos px-5'>
       
@@ -63,7 +77,7 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
             traerHistorialDeCompras.map((compra, index1) => (
               <div className='col-md-10 mb-5 mx-auto p-2 rounded shadow-lg' key={index1} style={ (compra.estado === 'approved') ? {backgroundColor: '#ffffff00'} : {backgroundColor: '#e91e6317'}}>
 
-                <div className="border-bottom">
+                <div className="row border-bottom">
                     <div className="col-6 col-md-6">
                       <h5 className="px-1 resize-h5">
                       {
@@ -74,7 +88,20 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
                         )
                       }
                       </h5>
+
                     </div>
+                    
+                    {
+                        props.isAdmin ? (
+                          <div className="col-12 col-md-6">
+                            <h5 className="px-1 resize-h5">
+                             Email: {compra.user_email}
+                            </h5>
+                          </div>
+                        ) : (
+                          null
+                        )
+                      }
 
                 </div>
 
@@ -172,6 +199,7 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
                 <div className='my-4 px-4 pt-4 border-top'>
                   <h5>Datos de envío:</h5>
                   <h6>Retirar compra en el local.</h6>
+                  <h6 className='col-md-4'>Teléfono: {compra.direccionDeEnvio.telefono} </h6>
                 </div>
               )
             }
@@ -199,7 +227,9 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
 
 
 
-    <Footer infiniteTextValue={props.infiniteTextValue}/>
+    { props.isAdmin ? (null) : <Footer infiniteTextValue={props.infiniteTextValue}/> }
+    
+
 </div>
   )
 }

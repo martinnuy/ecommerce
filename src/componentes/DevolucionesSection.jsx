@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav from './Nav'
 import Subtitulo from './Subtitulo'
 import { Link } from 'react-router-dom'
 import Footer from './Footer'
 
 function DevolucionesSection(props) {
+
+  //Cambia el titulo de la pagina.
+  useEffect(() => {
+    document.title = 'Política de devolución - DripDrop';
+    // Puedes limpiar el título cuando el componente se desmonta
+    return () => {
+      document.title = 'DripDrop';
+    };
+  }, [])
+
   return (
     <div>
 

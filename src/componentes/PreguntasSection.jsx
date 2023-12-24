@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav from './Nav'
 import Subtitulo from './Subtitulo'
 import { Link } from 'react-router-dom'
@@ -6,6 +6,16 @@ import Footer from './Footer'
 import '../hojas-de-estilos/PreguntasSection.css'
 
 function PreguntasSection(props) {
+
+  //Cambia el titulo de la pagina.
+  useEffect(() => {
+    document.title = 'Preguntas frecuentes - DripDrop';
+    // Puedes limpiar el título cuando el componente se desmonta
+    return () => {
+      document.title = 'DripDrop';
+    };
+  }, [])
+
   return (
     <div>
 

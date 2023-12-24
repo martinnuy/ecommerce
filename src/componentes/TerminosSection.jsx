@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav from './Nav'
 import Subtitulo from './Subtitulo'
 import { Link } from 'react-router-dom'
 import Footer from './Footer'
 
 function TerminosSection(props) {
+
+  //Cambia el titulo de la pagina.
+  useEffect(() => {
+    document.title = 'Terminos - DripDrop';
+    // Puedes limpiar el título cuando el componente se desmonta
+    return () => {
+      document.title = 'DripDrop';
+    };
+  }, [])
+
+
   return (
     <div>
 

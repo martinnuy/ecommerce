@@ -59,6 +59,7 @@ function UsersTabla() {
             <th scope="col">Username</th>
             <th scope="col">Email</th>
             <th scope="col">Verificado</th>
+            <th scope="col">Novedades</th>
             <th scope="col">Registro</th>
             <th scope="col">Ultimo Login</th>
             <th scope="col">Nº Compras</th>
@@ -73,6 +74,7 @@ function UsersTabla() {
             <td>{ p.username }</td>
             <td>{ p.email }</td>
             <td>{ p.verificado ? 'Si' : 'No' }</td>
+            <td>{ p.recibirNovedadesPorEmail ? 'Suscrito' : 'No suscrito' }</td>
             <td>{ format(new Date(p.createdAt), 'dd/MM/yyyy - HH:mm') }</td>
             <td>{ format(new Date(p.lastLogin), 'dd/MM/yyyy - HH:mm') }</td>
             <td>{ p.numeroDeCompras }</td>

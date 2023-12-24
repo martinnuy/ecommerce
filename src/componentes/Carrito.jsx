@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../hojas-de-estilos/Carrito.css";
 import Footer from "./Footer";
 import Nav from "./Nav";
@@ -181,6 +181,15 @@ function Carrito(props) {
       };
 
 
+      //Cambia el titulo de la pagina.
+      useEffect(() => {
+        document.title = 'Carrito - DripDrop';
+        // Puedes limpiar el título cuando el componente se desmonta
+        return () => {
+          document.title = 'DripDrop';
+        };
+      }, [])
+      
     
       //Spinner
       if (isLoading) {
@@ -193,6 +202,7 @@ function Carrito(props) {
       if (isError) {
         return <div>Error al obtener los datos</div>;
       }
+
 
 
   return (

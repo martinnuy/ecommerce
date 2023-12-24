@@ -38,6 +38,17 @@ function MostrarProductos(props) {
     }
   }, [props.actualizarEnEntrar, refetch]);
 
+
+  
+  //Cambia el titulo de la pagina.
+  useEffect(() => {
+    document.title = ( props.titulo.charAt(0).toUpperCase() + props.titulo.slice(1).toLowerCase() ) + ' - DripDrop';
+    // Puedes limpiar el título cuando el componente se desmonta
+    return () => {
+      document.title = 'DripDrop';
+    };
+  }, [props.titulo]);
+
   //Spinner
   if (isLoading) {
     return (

@@ -7,6 +7,7 @@ import MostrarProductos from "./MostrarProductos";
 import Subtitulo from "./Subtitulo";
 import AgregarCategoria from "./AgregarCategoria";
 import UsersTabla from "./UsersTabla";
+import ComprasHistorial from "./ComprasHistorial";
 
 function AdminPanel() {
   const [ventana, setVentana] = useState(<AgregarProducto />);
@@ -26,7 +27,18 @@ function AdminPanel() {
             <div className="position-sticky div-link-panel">
               <ul className="nav flex-column">
                 <PanelButton tittle="Inicio" />
-                <PanelButton tittle="Pedidos" />
+
+
+                <PanelButton 
+                  tittle="Pedidos" 
+                  onclick={() => {
+                    setVentana(
+                      <ComprasHistorial isAdmin='true' />
+                    );
+                  }}
+                />
+
+
                 <PanelButton tittle="Estadisticas" />
 
                 <PanelButton

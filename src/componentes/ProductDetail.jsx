@@ -194,8 +194,16 @@ const ProductDetail = (props) => {
         })
         .catch(error => {
           console.error('Error durante la solicitud:', error);
-          // Aquí puedes manejar errores, por ejemplo, mostrar un mensaje al usuario
         });
+    }
+
+    //Cambia el titulo de la pagina.
+    if(product && product.nombre){
+      document.title = ( product.nombre.charAt(0).toUpperCase() + product.nombre.slice(1).toLowerCase() ) + ' - DripDrop';
+      // Puedes limpiar el título cuando el componente se desmonta
+      return () => {
+        document.title = 'DripDrop';
+    };
     }
 
   }, [product]);

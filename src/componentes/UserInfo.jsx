@@ -166,6 +166,17 @@ function UserInfo(props) {
     // Llamar a la función para realizar la solicitud con token
     fetchDataWithToken();
   }, [reloadData]);
+
+
+  //Cambia el titulo de la pagina.
+  useEffect(() => {
+    document.title = 'Mis Datos - DripDrop';
+    // Puedes limpiar el título cuando el componente se desmonta
+    return () => {
+      document.title = 'DripDrop';
+    };
+  }, [])
+
   return (
     <div>
       <Nav />

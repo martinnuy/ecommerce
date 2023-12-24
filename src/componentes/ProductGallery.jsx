@@ -18,7 +18,7 @@ function ProductGallery(props) {
           <Subtitulo titulo={props.titulo}/>
 
 
-          <MostrarProductos categoria={ busqueda ? ('search/' + busqueda) : props.categoria} actualizarEnEntrar={props.actualizarEnEntrar} />
+          <MostrarProductos titulo={props.titulo} categoria={ busqueda ? ('search/' + busqueda) : props.categoria} actualizarEnEntrar={props.actualizarEnEntrar} />
 
 
         </div>

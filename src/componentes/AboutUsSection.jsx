@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav from './Nav'
 import Subtitulo from './Subtitulo'
 import Footer from './Footer'
 import { Link } from 'react-router-dom'
 
-function aboutUsSection(props) {
+function AboutUsSection(props) {
+
+  //Cambia el titulo de la pagina.
+  useEffect(() => {
+    document.title = 'Acerca de nosotros - DripDrop';
+    // Puedes limpiar el título cuando el componente se desmonta
+    return () => {
+      document.title = 'DripDrop';
+    };
+  }, [])
+        
   return (
     <div>
       <Nav/>
@@ -37,4 +47,4 @@ function aboutUsSection(props) {
   )
 }
 
-export default aboutUsSection
+export default AboutUsSection
