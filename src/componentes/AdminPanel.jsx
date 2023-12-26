@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavSimple from "./NavSimple";
 import PanelButton from "./PanelButton";
 import "../hojas-de-estilos/AdminPanel.css";
@@ -16,6 +16,15 @@ function AdminPanel() {
     localStorage.removeItem("token");
     window.location.reload();
   };
+
+    //Cambia el titulo de la pagina.
+  useEffect(() => {
+    document.title = 'Admin Panel - DripDrop';
+    // Puedes limpiar el título cuando el componente se desmonta
+    return () => {
+      document.title = 'DripDrop';
+    };
+  }, [])
 
   return (
     <div>

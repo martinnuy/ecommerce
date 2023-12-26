@@ -52,6 +52,15 @@ function Pagar(props) {
     }
   }, [contextDataCart, navigate]);
 
+    //Cambia el titulo de la pagina.
+    useEffect(() => {
+      document.title = 'Pagar - DripDrop';
+      // Puedes limpiar el título cuando el componente se desmonta
+      return () => {
+        document.title = 'DripDrop';
+      };
+    }, [])
+
   return (
     <div>
       <Nav />
