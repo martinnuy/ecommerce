@@ -242,13 +242,6 @@ function AgregarProducto() {
               />
             </div>
 
-            <button
-                className="btn mx-2 btn-outline-danger btn-m ml-2"
-                type="button"
-                //onClick={aplicarCodigoDeDescuento}
-              >
-                Aplicar
-              </button>
           </div>
 
               <h5 className='text-center mb-3'>Stock Total: {stockTotal}</h5>
