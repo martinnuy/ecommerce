@@ -7,6 +7,10 @@ import LoadSpinner from "./LoadSpinner";
 import "../hojas-de-estilos/ProductDetail.css";
 
 import { DataContext } from "../contexts/dataContext";
+import { SwiperSlide } from "swiper/react";
+import ProductCard from "./ProductCard";
+import Slider from "./Slider";
+import Subtitulo from "./Subtitulo";
 
 
 const ProductDetail = (props) => {
@@ -23,6 +27,7 @@ const ProductDetail = (props) => {
 
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
+  const [randomProducts, setRandomProducts] = useState(null);
 
   const {contextDataCart, setContextDataCart} = useContext(DataContext);
   const {contextDataFavoritos, setContextDataFavoritos} = useContext(DataContext);
@@ -37,8 +42,41 @@ const ProductDetail = (props) => {
           setStock(data.tallesDisponibles[0].stock); 
         }
       })
-      .catch((error) => console.error("Error fetching product details", error));
-  }, [slug]);
+      .catch((error) => {
+        console.error("Error fetching product details", error);
+        navigate('/error');
+      });
+
+      //Productos random
+      fetch(process.env.REACT_APP_API_URI + `/productos/randomProducts`)
+      .then((response) => response.json())
+      .then((data) => {
+        setRandomProducts(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product details", error);
+      });
+
+
+  }, [slug, navigate]);
+
+
+    function generarProductosSlider(grupo) {
+      if (grupo && grupo.length !== 0) {
+        return grupo.map((p, index) => (
+          <SwiperSlide key={index}>
+            <ProductCard
+            titulo={p.nombre} 
+            tipo={p.categoria} 
+            precio={p.precio} 
+            imgUrl={p.img}
+            id={p._id}
+            slug={p.slug} 
+            blurImage="true" />
+          </SwiperSlide>
+        ));
+      }
+    }
 
   const handleQuantityChange = (event) => {
     setQuantity(parseInt(event.target.value, 10));
@@ -94,6 +132,7 @@ const ProductDetail = (props) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    const botonPresionado = event.nativeEvent.submitter.name;
 
     // Obtener el token del Local Storage
     const token = localStorage.getItem('token');
@@ -117,7 +156,11 @@ const ProductDetail = (props) => {
 
         if (response.ok) {
           setContextDataCart(contextDataCart + quantity);
-          navigate('/cart');
+
+          if(botonPresionado === 'comprar' ){
+            navigate('/cart');
+          }
+
         } else {
           const errorFromServer = await response.json();
           setMessage(errorFromServer.error);
@@ -370,10 +413,10 @@ const ProductDetail = (props) => {
                 
               </div>
               <div></div>
-              <button type="submit" className="col-12 col-md-12 mt-2 btn btn-danger boton-login-adm">
+              <button type="submit" name="comprar" className="col-12 col-md-12 mt-2 btn btn-danger boton-login-adm">
                 Comprar ahora
               </button>
-              <button type="submit" className="col-12 col-md-12 mt-2 btn btn-secondary">
+              <button type="submit" name="agregarAlCarrito" className="col-12 col-md-12 mt-2 btn btn-secondary">
                 Agregar al carrito
               </button>
             </form>
@@ -381,6 +424,12 @@ const ProductDetail = (props) => {
           </div>
         </div>
       </div>
+
+      <div className="mt-5">
+        <Subtitulo titulo='Sugerencias' />
+        <Slider arregloPrendas={generarProductosSlider(randomProducts)} />
+      </div>
+
 
       <Footer infiniteTextValue={props.infiniteTextValue} />
     </div>

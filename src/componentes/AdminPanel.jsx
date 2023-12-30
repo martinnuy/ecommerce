@@ -8,6 +8,7 @@ import Subtitulo from "./Subtitulo";
 import AgregarCategoria from "./AgregarCategoria";
 import UsersTabla from "./UsersTabla";
 import ComprasHistorial from "./ComprasHistorial";
+import CodigoDeDescuento from "./CodigoDeDescuento";
 
 function AdminPanel() {
   const [ventana, setVentana] = useState(<AgregarProducto />);
@@ -80,7 +81,12 @@ function AdminPanel() {
                     setVentana(<UsersTabla />);
                   }}
                 />
-                <PanelButton tittle="Ofertas" />
+                <PanelButton 
+                tittle="Ofertas" 
+                  onclick={() => {
+                    setVentana(<CodigoDeDescuento />);
+                  }}
+                />
                 <PanelButton tittle="Cerrar Sesion" onclick={logoutFunction} />
               </ul>
             </div>

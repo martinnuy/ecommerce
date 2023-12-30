@@ -26,6 +26,7 @@ import UserInfo from './componentes/UserInfo';
 import Envio from './componentes/Envio';
 import Pagar from './componentes/Pagar';
 import ComprasHistorial from './componentes/ComprasHistorial';
+import ErrorPage from './componentes/ErrorPage';
 
 const queryClient = new QueryClient();
 
@@ -80,6 +81,8 @@ function App() {
     
     <Routes>
       <Route path='/' element={<Home infiniteTextValue={infiniteTextValue} />} />
+      <Route path='/error' element={<ErrorPage/>} />
+
       
       <Route path='/ropa' element={<ProductGallery titulo="ROPA" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
       <Route path='/calzado' element={<ProductGallery titulo="CALZADO" categoria="calzado" infiniteTextValue={ infiniteTextValue }/>} />
@@ -93,7 +96,7 @@ function App() {
       
       <Route path='/p/:slug' element={<ProductDetail infiniteTextValue={ infiniteTextValue } />} />
 
-      <Route path='/s/:busqueda' element={<ProductGallery titulo="RESULTADOS" categoria="remera" infiniteTextValue={ infiniteTextValue }/>} />
+      <Route path='/s/:busqueda' element={<ProductGallery titulo="RESULTADOS" categoria="busqueda" infiniteTextValue={ infiniteTextValue }/>} />
 
 
       <Route path='/user' element={ 

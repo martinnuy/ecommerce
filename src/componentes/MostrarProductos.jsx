@@ -89,6 +89,19 @@ function MostrarProductos(props) {
     )
   }
 
+  //En caso de que no existan productos en la busqueda
+  if(props.titulo === 'RESULTADOS' && traerProductos.length === 0){
+    return (
+      <div className="container mt-5 void-section rounded">
+      <div className="text-center">
+         <MdOutlineShoppingBag size={100} />
+        <p className="mt-3 fs-5">No se encontraron resultados para tu busqueda.</p>
+        <p className='fs-5 text-secondary'>Por favor intente de nuevo.</p>
+      </div>
+    </div>
+    )
+  }
+
   return (
     <div>
       <div className='row'>

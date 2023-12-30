@@ -26,7 +26,6 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
         throw new Error('Error al obtener los datos');
         }
         const data = await response.json();
-        console.log(data);
         return data;
     },
     {
@@ -117,6 +116,10 @@ const { data: traerHistorialDeCompras, refetch, isLoading, isError } = useQuery(
                       <img
                           className="rounded"
                           src={producto.img}
+                          onError={(e) => {
+                            // Manejar el error cambiando la fuente a la imagen predeterminada
+                            e.target.src = require('../imagenes/imgDisabled.png');
+                          }}
                           width="150"
                           alt={`Product ${index + 1}`}
                       />
