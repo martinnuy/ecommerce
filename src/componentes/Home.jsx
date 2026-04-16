@@ -42,7 +42,7 @@ function Home(props) {
   );
 
   function generarProductosSlider(grupo) {
-    if (grupo.length !== 0) {
+    if (grupo && grupo.length !== 0) {
       return grupo.map((p, index) => (
         <SwiperSlide key={index}>
           <ProductCard 
